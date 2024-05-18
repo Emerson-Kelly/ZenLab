@@ -11,27 +11,47 @@
 
 <body>
     <form class="task-input" id="taskForm">
-        <div class="task-name">
-            <label for="taskname">Task Name:</label>
-            <input type="text" id="taskname" name="taskname">
-        </div>
-        <div class="task-details">
-            <label for="taskdetails">Task Details:</label>
-            <textarea class="input-textarea" id="taskdetails" name="taskdetails"></textarea>
-        </div>
-        <div class="priority-submit">
-            <div class="priority-dropdown">
-                <label for="priority">Priority:</label>
-                <select name="priority" id="priority">
-                    <option value="high">High</option>
-                    <option value="medium">Medium</option>
-                    <option value="low">Low</option>
-                </select>
+        <div class="mb-3">
+            <div class="task-name">
+                <label style="width: 140px;" for="taskname">Task Name:</label>
+                <input type="text" class="form-control" id="taskname" name="taskname">
             </div>
-            <input type="submit" value="Submit">
         </div>
-    </form>    
-
+        <div class="mb-3">
+            <div class="task-details">
+                <label style="width: 140px;" for="taskdetails">Task Details:</label>
+                <textarea class="input-textarea form-control" id="taskdetails" name="taskdetails"></textarea>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="due-date">
+                <label style="width: 140px;" for="priority-date">Due Date:</label>
+                <input type="text" class="form-control" id="dateInput" placeholder="Select a date">
+                <div class="calendar" id="calendar">
+                    <div class="header">
+                        <button id="prevBtn">&lt;</button>
+                        <h2 id="monthYear">Month Year</h2>
+                        <button id="nextBtn">&gt;</button>
+                    </div>
+                    <div class="days" id="daysContainer"></div>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="priority-submit">
+                <div class="priority-dropdown">
+                    <label style="width: 64px" for="priority">Priority:</label>
+                    <select class="form-select" name="priority" id="priority">
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+                <button type="submit" value="Submit" class="btn btn-success">Submit</button>
+            </div>
+        </div>
+    </form>
+    <div id="taskContainer" class="mt-4"></div>
 </body>
 
 </html>

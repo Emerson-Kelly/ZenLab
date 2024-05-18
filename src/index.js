@@ -1,10 +1,14 @@
 import _ from 'lodash';
 import './style.css';
-import { appendTask } from './displayTask.js'; // Ensure appendTask is exported
+import { appendTask } from './displayTask.js';
+
+
 
 if (process.env.NODE_ENV !== 'production') {
     console.log('Looks like we are in development mode!');
 }
+
+
 
 function component() {
 
@@ -20,6 +24,9 @@ function component() {
 
 document.body.appendChild(component());
 
+
+
 // Initialize the task form event listener
+
 
 appendTask();
