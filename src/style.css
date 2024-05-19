@@ -1,3 +1,7 @@
+body {
+   background-color: #fffcf9;
+}
+
 .task-input {
     display: flex;
     flex-direction: column;
@@ -34,7 +38,19 @@
 .input-textarea {
     min-height: 30px;
 }
-  
+
+.submit {
+    background-color: #2b3b3b;
+    border-color: #2b3b3b;
+    color: white;
+}
+
+.submit:hover {
+    border-color: #2b3b3b;
+    color: #2b3b3b;
+    background-color: white;
+}
+
 .calendar-box {
     text-align: center;
     padding: 20px;
@@ -62,7 +78,7 @@
 }
   
 .header {
-    background-color: #3498db;
+    background-color: #b2a58d;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -101,12 +117,13 @@
 }
   
 .day.current {
-    background-color: #3498db;
-    color: white;
+    background-color: white;
+    color: black;
+    border: 1px solid teal;
 }
   
 .day.selected {
-    background-color: #2ecc71;
+    background-color: teal;
     color: white;
 }
   
@@ -118,4 +135,54 @@
     font-size: 14px;
     outline: none;
     cursor: pointer;
+}
+
+.mt-4 {
+    max-width: 600px;
+    margin: auto;
+}
+
+.task-header, .task-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-header-right {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    width: 168.24px;
+    justify-content: space-between;
+}
+
+.due-date-header {
+    color: grey;
+    font-weight: 300;
+}
+
+.task-header-right .btn-link {
+    padding: 0;
+}
+
+.task-footer .btn-outline-success {
+    color: teal;
+    border-color: teal;
+}
+
+.task-footer .btn-outline-success:hover {
+    background-color: teal;
+    color: white;
+}
+
+.trash-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.trash-icon:hover {
+   transition-duration: 200ms;
+    width: 28px;
+    height: 28px;
 }

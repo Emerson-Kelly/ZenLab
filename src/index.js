@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import './style.css';
-import { appendTask } from './displayTask.js';
+import DisplayTask, { appendTask } from './displayTask.js';
 
 
 
