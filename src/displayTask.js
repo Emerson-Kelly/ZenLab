@@ -60,7 +60,7 @@ export function appendTask() {
         const description = document.getElementById('taskdetails').value;
         const priority = document.getElementById('priority').value;
         const dueDate = document.getElementById('dateInput').value || 'No due date specified';
-        let taskStatus = 'Incomplete';
+        const taskStatus = 'Incomplete';
 
         // Create a new DisplayTask object
         const newTask = new DisplayTask(title, description, dueDate, priority, taskStatus);
@@ -71,6 +71,8 @@ export function appendTask() {
 
         taskArray.push(newTask);
         handleTaskArray();
+
+        taskForm.reset();
 
         // Optionally log the new task
         console.log(newTask);
