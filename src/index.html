@@ -41,11 +41,12 @@
             <div class="priority-submit">
                 <div class="priority-dropdown">
                     <label style="width: 64px" for="priority">Priority:</label>
-                    <select class="form-select" name="priority" id="priority">
+                    <select class="form-select" name="priority" id="priority" required>
+                        <option value="" disabled selected>Select</option>
                         <option value="high">High</option>
                         <option value="medium">Medium</option>
                         <option value="low">Low</option>
-                    </select>
+                    </select>                    
                 </div>
                 <button type="submit" value="Submit" class="btn submit">Submit</button>
             </div>

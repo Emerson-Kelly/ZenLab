@@ -55,6 +55,13 @@ export function appendTask() {
     document.getElementById('taskForm').addEventListener('submit', function (event) {
         event.preventDefault(); // Prevents the default form submission
 
+         // Check if a valid priority is selected
+         const prioritySelect = document.getElementById('priority');
+         if (prioritySelect.value === "") {
+             alert("Please select a valid priority.");
+             return; // Prevent form submission if the priority is not selected
+         }
+
         // Gather input values
         const title = document.getElementById('taskname').value;
         const description = document.getElementById('taskdetails').value;
