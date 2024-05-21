@@ -182,7 +182,7 @@ body {
 }
 
 .trash-icon:hover {
-   transition-duration: 200ms;
-    width: 28px;
-    height: 28px;
+   transition-duration: 150ms;
+    width: 26px;
+    height: 26px;
 }
