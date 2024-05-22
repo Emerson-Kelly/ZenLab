@@ -1,5 +1,7 @@
 import { renderCalendar } from './datePicker.js';
-//import { taskComplete } from './completeTask.js';
+import { taskComplete } from './completeTask.js';
+//import { toggleParagraphs } from './expandAndCollapse.js'
+import { toggleParagraphs, handleExpandButton } from './expandAndCollapse.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     renderCalendar();
@@ -27,40 +29,58 @@ export default class DisplayTask {
         taskElement.innerHTML = `
             <div class="card-body">
                 <div class="task-header">
+                <div class="task-header-left">
+                <button style="padding-left: 0" type="button" class="btn btn-link">
+             <svg class="trash-icon" xmlns="http://www.w3.org/2000/svg" fill="#dc3545" viewBox="0 0 16 16">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                 </svg>
+                </button>
                     <h5 class="card-title">${this.title}</h5>
+                    </div>
                     <div class="task-header-right">
-                        <p class="due-date-header">Due: ${this.dueDate}</p>
-                        <button type="button" class="btn btn-link">
-                            <svg class="trash-icon" xmlns="http://www.w3.org/2000/svg" fill="#dc3545" viewBox="0 0 16 16">
-                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                            </svg>
-                        </button>
+                    <h6 class="due-date-header">Due: ${this.dueDate}</h6>
+                    <button type="button" class="btn btn-outline-success">
+                    Complete
+                </button>
                     </div>
                 </div>
                 <p class="card-text">${this.description}</p>
                 <div class="task-footer">
                     <p>Priority: ${this.priority}</p>
-                    <button type="button" class="btn btn-outline-success">
-                        Complete
-                    </button>
+                    <button type="button" class="btn btn-link expand-collapse">details˅</button>
+                   
                 </div>
             </div>
         `;
+
+        // Add event listener to the expand button
+
+        /*
+        const expandButton = taskElement.querySelector('.expand-collapse');
+        expandButton.addEventListener('click', () => {
+            toggleParagraphs(taskElement);
+        });
+        */
+        handleExpandButton(taskElement);
+
         return taskElement;
     }
+
 }
+
+
 
 export function appendTask() {
     document.getElementById('taskForm').addEventListener('submit', function (event) {
         event.preventDefault(); // Prevents the default form submission
 
-         // Check if a valid priority is selected
-         const prioritySelect = document.getElementById('priority');
-         if (prioritySelect.value === "") {
-             alert("Please select a valid priority.");
-             return; // Prevent form submission if the priority is not selected
-         }
+        // Check if a valid priority is selected
+        const prioritySelect = document.getElementById('priority');
+        if (prioritySelect.value === "") {
+            alert("Please select a valid priority.");
+            return; // Prevent form submission if the priority is not selected
+        }
 
         // Gather input values
         const title = document.getElementById('taskname').value;

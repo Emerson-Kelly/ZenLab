@@ -26,7 +26,7 @@ body {
 }
 
 .form-select {
-    width: 50%;
+    width: 63%;
 }
 
 .priority-dropdown {
@@ -143,22 +143,38 @@ body {
 
 .task-header, .task-footer {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-content: flex-start;
+    margin-bottom: 1rem;
+    align-items: baseline;
 }
 
 .task-header-right {
     display: flex;
     flex-direction: row;
     align-items: baseline;
-    width: 168.24px;
-    justify-content: space-between;
+    width: 230px;
+    justify-content: flex-end;
+    gap: 1rem;
 }
 
+.task-header-left {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+}
 .due-date-header {
     color: grey;
     font-weight: 300;
+}
+
+.due-date-header .btn, .btn-secondary {
+    width: 96.12px;
+}
+
+.task-footer .btn-check:focus+.btn, .btn:focus {
+   box-shadow: none;
 }
 
 .task-header-right .btn-link {
@@ -178,10 +194,32 @@ body {
 .trash-icon {
     width: 24px;
     height: 24px;
+    position: absolute;
+    top: 1.5rem;
 }
 
 .trash-icon:hover {
    transition-duration: 150ms;
     width: 26px;
     height: 26px;
+}
+
+.card-title {
+    padding-left: 1.5rem;
+}
+
+.card-body {
+   padding: 1rem 1rem 0 1rem;
+}
+
+.card-body p {
+    display: none;
+}
+
+.expand-collapse {
+    font-style: italic;
+    float: right;
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }
