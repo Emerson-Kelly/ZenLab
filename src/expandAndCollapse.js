@@ -1,4 +1,4 @@
-// taskUtils.js
+
 export function toggleParagraphs(taskElement, expandButton) {
     const paragraphs = taskElement.querySelectorAll('p');
 

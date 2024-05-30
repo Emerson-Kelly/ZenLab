@@ -209,6 +209,17 @@ body {
     padding-left: 1.5rem;
 }
 
+.card-title:focus-visible {
+    margin-left: 1.5rem;
+    padding: 0 .8rem 0 0;
+}
+
+.card-title:hover {
+    background-color: lightgray;
+    margin-left: 1.5rem;
+    padding: 0 .8rem 0 0;
+}
+
 .card-body {
    padding: 1rem 1rem 0 1rem;
 }
@@ -217,11 +228,23 @@ body {
     display: none;
 }
 
+.card-body p:first-of-type:hover {
+    background-color: lightgray;
+}
+
 .expand-collapse {
     font-style: italic;
     float: right;
     position: absolute;
     right: 0;
+    bottom: 0;
+}
+
+.edit-task{
+    font-style: italic;
+    float: left;
+    position: absolute;
+    left: 0;
     bottom: 0;
 }
 

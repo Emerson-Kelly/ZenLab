@@ -2,10 +2,15 @@ import { renderCalendar } from './datePicker.js';
 import { taskComplete } from './completeTask.js';
 //import { toggleParagraphs } from './expandAndCollapse.js'
 import { toggleParagraphs, handleExpandButton } from './expandAndCollapse.js';
+import { addEditTaskEventListeners } from './editTask.js';
+
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
     renderCalendar();
     appendTask();
+   
 });
 
 export let taskArray = [];
@@ -15,7 +20,8 @@ export function handleTaskArray() {
 }
 
 export default class DisplayTask {
-    constructor(title, description, dueDate, priority, taskStatus) {
+    constructor(taskIndex, title, description, dueDate, priority, taskStatus) {
+        this.taskIndex = taskIndex;
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
@@ -26,6 +32,7 @@ export default class DisplayTask {
     createTaskElement() {
         const taskElement = document.createElement('div');
         taskElement.classList.add('card', 'mb-2');
+        taskElement.dataset.index = this.taskIndex;
         taskElement.innerHTML = `
             <div class="card-body">
                 <div class="task-header">
@@ -36,7 +43,7 @@ export default class DisplayTask {
                 <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
                  </svg>
                 </button>
-                    <h5 class="card-title">${this.title}</h5>
+                    <h5 class="card-title" contenteditable="true">${this.title}</h5>
                     </div>
                     <div class="task-header-right">
                     <h6 class="due-date-header">Due: ${this.dueDate}</h6>
@@ -45,26 +52,21 @@ export default class DisplayTask {
                 </button>
                     </div>
                 </div>
-                <p class="card-text">${this.description}</p>
-                <div class="task-footer">
+                <p class="card-text" contenteditable="true">${this.description}</p>
                     <p>Priority: ${this.priority}</p>
+                    <div class="task-footer">
                     <button type="button" class="btn btn-link expand-collapse">details˅</button>
                    
                 </div>
             </div>
         `;
 
-        // Add event listener to the expand button
+        addEditTaskEventListeners(taskElement);
 
-        /*
-        const expandButton = taskElement.querySelector('.expand-collapse');
-        expandButton.addEventListener('click', () => {
-            toggleParagraphs(taskElement);
-        });
-        */
         handleExpandButton(taskElement);
-
+        
         return taskElement;
+        
     }
 
 }
@@ -90,7 +92,8 @@ export function appendTask() {
         const taskStatus = 'Incomplete';
 
         // Create a new DisplayTask object
-        const newTask = new DisplayTask(title, description, dueDate, priority, taskStatus);
+        const taskIndex = taskArray.length;
+        const newTask = new DisplayTask(taskIndex, title, description, dueDate, priority, taskStatus);
 
         // Create a task element and append it to the task container
         const taskElement = newTask.createTaskElement();
@@ -100,8 +103,9 @@ export function appendTask() {
         handleTaskArray();
 
         taskForm.reset();
-
+        
         // Optionally log the new task
         console.log(newTask);
     });
+    
 }
