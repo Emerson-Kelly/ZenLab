@@ -53,7 +53,7 @@ export default class DisplayTask {
                     </div>
                 </div>
                 <p class="card-text" contenteditable="true">${this.description}</p>
-                    <p>Priority: ${this.priority}</p>
+                    <p>Priority: <span class="priority-text">${this.priority}</span></p>
                     <div class="task-footer">
                     <button type="button" class="btn btn-link expand-collapse">details˅</button>
                    
@@ -90,6 +90,7 @@ export function appendTask() {
         const priority = document.getElementById('priority').value;
         const dueDate = document.getElementById('dateInput').value || 'No due date specified';
         const taskStatus = 'Incomplete';
+       
 
         // Create a new DisplayTask object
         const taskIndex = taskArray.length;
@@ -98,6 +99,20 @@ export function appendTask() {
         // Create a task element and append it to the task container
         const taskElement = newTask.createTaskElement();
         document.getElementById('taskContainer').appendChild(taskElement);
+
+        const priorityTextElements = taskElement.querySelectorAll('.priority-text');
+        priorityTextElements.forEach(priorityText => {
+            if (priority === "high") {
+                priorityText.style.color = 'Red';
+            }
+            else if (priority === "medium") {
+                priorityText.style.color = 'Orange';
+            }
+            else {
+                priorityText.style.color = 'Green';
+            }
+            
+        });
 
         taskArray.push(newTask);
         handleTaskArray();
