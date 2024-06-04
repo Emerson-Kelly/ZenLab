@@ -1,5 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;800&family=Poppins:wght@300;400;500;600;700&display=swap");
+
+* {
+  font-family: "Poppins", "sans-sarif";
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+    --body-color: #e4e9f7;
+    --sidebar-color: #fff;
+    --primary-color: #f4f2f2;
+    --primary-color-light: #f4f2f2;
+    --toggle-color: #ddd;
+    --text-color: #707070;
+    --dark-color: #000;
+  
+    --trans-02: all 0.2s ease;
+    --trans-03: all 0.3s ease;
+    --trans-04: all 0.4s ease;
+    --trans-04: all 0.5s ease;
+  }
+
 body {
-   background-color: #fffcf9;
+    height: 100vh;
+    background-color: var(--body-color);
+    transition: var(--trans-02);
    overflow-x: hidden;
 }
 
@@ -34,6 +60,13 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+.filter-dropdown {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    float: right;
 }
 
 .input-textarea {
@@ -270,13 +303,14 @@ body {
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
-    background: #2e3030;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+    background-color: var(--sidebar-color);
+    padding: 10px 14px;
+    transition: var(--trans-02);
+
 }
 
+
+ 
 #wrapper.toggled #sidebar-wrapper {
     width: 250px;
 }
@@ -295,16 +329,12 @@ body {
 /* Sidebar Styles */
 
 .sidebar-nav {
-    position: absolute;
-    top: 0;
-    width: 250px;
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
 .sidebar-nav li {
-    text-indent: 20px;
     line-height: 40px;
 }
 
@@ -314,11 +344,14 @@ body {
     color: #999999;
 }
 
+
 .sidebar-nav li a:hover {
     text-decoration: none;
-    color: #fff;
+   
     background: rgba(255,255,255,0.2);
+    background-color: var(--toggle-color);
 }
+
 
 .sidebar-nav li a:active,
 .sidebar-nav li a:focus {
@@ -329,6 +362,8 @@ body {
     height: 65px;
     font-size: 18px;
     line-height: 60px;
+    display: flex;
+    align-items: center;
 }
 
 .sidebar-nav > .sidebar-brand a {
@@ -338,6 +373,23 @@ body {
 .sidebar-nav > .sidebar-brand a:hover {
     color: #fff;
     background: none;
+}
+
+.projects {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: .4rem;
+    text-align: center;
+}
+
+.projects a {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-color);
+    /* transition: var(--trans-04); */
+    white-space: unset;
+    opacity: 1;
 }
 
 @media(min-width:768px) {
@@ -354,7 +406,7 @@ body {
     }
 
     #wrapper.toggled #sidebar-wrapper {
-        width: 0;
+        width: 80px;
     }
 
     #page-content-wrapper {

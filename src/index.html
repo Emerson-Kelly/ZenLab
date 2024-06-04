@@ -23,35 +23,55 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
+
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-
-                    <button class="btn btn-primary">
+                    <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36px" height="36px" fill="currentColor"
+                            class="bi bi-list" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+                        </svg>
+                    </a>
+                    <button id="create-project" class="btn btn-primary">
                         New Project +
                     </button>
                 </li>
-                <li>
-                    <a href="#">Reference</a>
-                </li>
+                <div class="projects">
+                    <li>
+                        <a href="#">Reference</a>
+                    </li>
+                </div>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
+           
+                <div class="filter-dropdown">
+                    <label style="width: 64px" for="filter">Filter:</label>
+                    <select class="form-select" name="filter" id="filter" required>
+                        <option value="" disabled selected>Select</option>
+                        <option value="highLow">priority (highest to lowest)</option>
+                        <option value="lowHigh">priority (lowest to highest)</option>
+                        <option value="newOld">new to old</option>
+                        <option value="oldNew">old to new</option>
+                        <option value="complete">complete</option>
+                        <option value="incomplete">incomplete</option>
+                    </select>
+                </div>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-
-
 
                         <form class="task-input" id="taskForm">
                             <div class="mb-3">
                                 <div class="task-name">
                                     <label style="width: 140px;" for="taskname">Task Name:</label>
-                                    <input type="text" class="form-control" id="taskname" autocomplete="off"
-                                        name="taskname">
+                                    <input type="text" class="form-control" id="taskName" autocomplete="off"
+                                        name="taskName">
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -91,7 +111,7 @@
                                 </div>
                             </div>
                         </form>
-                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
+                     
                         <div id="taskContainer" class="mt-4"></div>
                     </div>
                 </div>
