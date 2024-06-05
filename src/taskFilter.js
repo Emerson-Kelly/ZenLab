@@ -1,7 +1,9 @@
 import { taskArray } from './displayTask.js';
+import { toggleStrikethrough } from './completeTask.js';
+
+
 
 // Add event listener to the dropdown menu
-
 const filterDropdown = document.getElementById('filter');
 
 filterDropdown.addEventListener('change', () => {
@@ -25,11 +27,10 @@ filterDropdown.addEventListener('change', () => {
         case 'incomplete':
             filterTasksByCompletion(false); // Filter tasks by incompletion
             break;
-            default:
-                reorderTaskElements(taskArray);
+        default:
+            reorderTaskElements(taskArray);
     }
 });
-
 
 // Function to sort tasks by priority
 function sortTasksByPriority(highToLow) {
@@ -65,23 +66,27 @@ function sortTasksByDate(newToOld) {
 // Function to filter tasks by completion
 function filterTasksByCompletion(complete) {
     console.log('Filtering tasks by completion:', complete ? 'Complete' : 'Incomplete'); // Debug statement
-
-    const taskContainer = document.getElementById('taskContainer');
-    taskContainer.innerHTML = ''; // Clear existing tasks
-
     const filteredTasks = taskArray.filter(task => task.taskStatus === (complete ? 'Complete' : 'Incomplete'));
+  
+
     reorderTaskElements(filteredTasks);
 }
-
-
 
 // Function to reorder task elements in the DOM
 function reorderTaskElements(tasks) {
     const taskContainer = document.getElementById('taskContainer');
-    taskContainer.innerHTML = '';
+    taskContainer.innerHTML = ''; // Clear existing tasks
+    
     tasks.forEach(task => {
         const taskElement = task.createTaskElement(); // Assuming this method creates the task element
         taskContainer.appendChild(taskElement); // Append the task element to the container
+
+        // Apply strikethrough style if the task is complete
+        if (task.taskStatus === 'Complete') {
+            toggleStrikethrough(taskElement, false);
+        } else {
+            toggleStrikethrough(taskElement, true);
+        }
     });
 }
 

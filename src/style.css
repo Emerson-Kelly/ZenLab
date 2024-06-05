@@ -8,7 +8,8 @@
 }
 
 :root {
-    --body-color: #e4e9f7;
+   /* --body-color: #e4e9f7;*/
+    --body-color: white;
     --sidebar-color: #fff;
     --primary-color: #f4f2f2;
     --primary-color-light: #f4f2f2;
@@ -306,7 +307,7 @@ body {
     background-color: var(--sidebar-color);
     padding: 10px 14px;
     transition: var(--trans-02);
-
+    box-shadow: 1px 0 5px -2px rgb(178 178 178 / 50%);
 }
 
 
@@ -364,6 +365,8 @@ body {
     line-height: 60px;
     display: flex;
     align-items: center;
+    justify-content: center;
+    gap: 1rem;
 }
 
 .sidebar-nav > .sidebar-brand a {
@@ -371,7 +374,7 @@ body {
 }
 
 .sidebar-nav > .sidebar-brand a:hover {
-    color: #fff;
+    /*color: #fff;*/
     background: none;
 }
 
@@ -418,4 +421,5 @@ body {
         position: relative;
         margin-right: 0;
     }
+
 }

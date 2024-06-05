@@ -11,7 +11,7 @@ function toggleCompleteTask(taskElement, isComplete) {
 }
 
 // Function to add or remove strikethrough to title and description
-function toggleStrikethrough(taskElement, isComplete) {
+export function toggleStrikethrough(taskElement, isComplete) {
     const cardTitle = taskElement.querySelector('.card-title');
     const cardText = taskElement.querySelector('.card-text');
     if (cardTitle && cardText) {
