@@ -1,16 +1,12 @@
 import { renderCalendar } from './datePicker.js';
 import { taskComplete } from './completeTask.js';
-//import { toggleParagraphs } from './expandAndCollapse.js'
 import { toggleParagraphs, handleExpandButton } from './expandAndCollapse.js';
 import { addEditTaskEventListeners } from './editTask.js';
-
-
 
 
 document.addEventListener('DOMContentLoaded', () => {
     renderCalendar();
     appendTask();
-   
 });
 
 export let taskArray = [];
@@ -60,19 +56,19 @@ class DisplayTask {
             </div>
         `;
 
-         // Apply priority color
-         const priorityTextElement = taskElement.querySelector('.priority-text');
-         switch (this.priority) {
-             case 'high':
-                 priorityTextElement.style.color = 'Red';
-                 break;
-             case 'medium':
-                 priorityTextElement.style.color = 'Orange';
-                 break;
-             case 'low':
-                 priorityTextElement.style.color = 'Green';
-                 break;
-         }
+        // Apply priority color
+        const priorityTextElement = taskElement.querySelector('.priority-text');
+        switch (this.priority) {
+            case 'high':
+                priorityTextElement.style.color = 'Red';
+                break;
+            case 'medium':
+                priorityTextElement.style.color = 'Orange';
+                break;
+            case 'low':
+                priorityTextElement.style.color = 'Green';
+                break;
+        }
 
         // Add edit task event listeners
         addEditTaskEventListeners(taskElement);
@@ -83,10 +79,6 @@ class DisplayTask {
         return taskElement;
     }
 }
-
-
-
-
 
 export function appendTask() {
     document.getElementById('taskForm').addEventListener('submit', function (event) {
@@ -105,23 +97,25 @@ export function appendTask() {
         const priority = document.getElementById('priority').value;
         const dueDate = document.getElementById('dateInput').value || 'No due date specified';
         const taskStatus = 'Incomplete';
-       
 
         // Create a new DisplayTask object
         const taskIndex = taskArray.length;
         const newTask = new DisplayTask(taskIndex, title, description, dueDate, priority, taskStatus);
 
-        // Create a task element and append it to the task container
+     
         const taskElement = newTask.createTaskElement();
         document.getElementById('taskContainer').appendChild(taskElement);
+      
+      
 
         taskArray.push(newTask);
         handleTaskArray();
 
+
+        // Reset the form after submission
         taskForm.reset();
-        
+
         // Optionally log the new task
         console.log(newTask);
     });
-    
 }

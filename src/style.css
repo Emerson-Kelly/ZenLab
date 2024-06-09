@@ -337,14 +337,37 @@ body {
 
 .sidebar-nav li {
     line-height: 40px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
 }
 
 .sidebar-nav li a {
     display: block;
     text-decoration: none;
     color: #999999;
+    display: block;
+    text-decoration: none;
+    color: #999999;
 }
 
+.sidebar-nav-item a {
+    display: block;
+    text-decoration: none;
+    color: #999999;
+}
+
+.sidebar-nav-item a[contenteditable="true"] {
+    outline: none; /* Remove the default outline for editable elements */
+    border-bottom: 1px dashed #999999; /* Optional: Add a visual indicator for editing */
+}
+
+.delete-button {
+    color: red; /* Optional: Style the delete button */
+    cursor: pointer;
+    background: none;
+    border: none;
+}
 
 .sidebar-nav li a:hover {
     text-decoration: none;
@@ -367,6 +390,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 1rem;
+    flex-direction: row;
 }
 
 .sidebar-nav > .sidebar-brand a {
