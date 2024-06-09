@@ -58,6 +58,17 @@ export default function createSideBarDropDown() {
         // Make the clicked project active
         document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
         projectElement.classList.add('active');
+
+        // Hide all task containers
+        document.querySelectorAll('.task-container').forEach(container => {
+            container.style.display = 'none';
+        });
+
+        // Show the task container associated with the clicked project
+        const taskContainer = document.getElementById(taskContainerId);
+        if (taskContainer) {
+            taskContainer.style.display = 'block';
+        }
     });
 
     
@@ -73,7 +84,5 @@ export default function createSideBarDropDown() {
         document.getElementById(taskContainerId).remove();
     });
 
-    createTaskContainer(taskContainerId);  // Pass the task container ID to the createTaskContainer function
-  
+    createTaskContainer(taskContainerId, `New Project ${projectCounter}`);
 }
-

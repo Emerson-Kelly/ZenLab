@@ -104,8 +104,20 @@ export function appendTask() {
 
      
         const taskElement = newTask.createTaskElement();
-        document.getElementById('taskContainer').appendChild(taskElement);
-      
+       // document.getElementById('taskContainer').appendChild(taskElement);
+       const activeProject = document.querySelector('.nav-link.active');
+       if (activeProject) {
+           const taskContainerId = activeProject.href.split('#')[1];
+           const taskContainer = document.getElementById(taskContainerId);
+           if (taskContainer) {
+               taskContainer.appendChild(taskElement);
+           } else {
+               console.error('Task container not found for the active project');
+           }
+       } else {
+           console.error('No active project found');
+       }
+
       
 
         taskArray.push(newTask);
