@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-
 function component() {
 
  
@@ -24,9 +23,10 @@ function component() {
     return element;
   
    
-   
+    
 
 }
+
 
 document.body.appendChild(component());
 
