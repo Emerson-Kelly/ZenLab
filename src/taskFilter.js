@@ -1,5 +1,6 @@
 import { taskArray } from './displayTask.js';
 import { toggleStrikethrough } from './completeTask.js';
+import { projectCounter } from './createProject.js';
 
 
 
@@ -72,21 +73,30 @@ function filterTasksByCompletion(complete) {
     reorderTaskElements(filteredTasks);
 }
 
+
 // Function to reorder task elements in the DOM
-function reorderTaskElements(tasks) {
-    const taskContainer = document.getElementById('taskContainer');
+export function reorderTaskElements(tasks) {
+    // Get the ID of the currently active task container
+    const activeTaskContainerId = document.querySelector('.nav-link.active').getAttribute('href').substring(1);
+    const taskContainer = document.getElementById(activeTaskContainerId);
     taskContainer.innerHTML = ''; // Clear existing tasks
+    if (!taskContainer) {
+        console.error('Active task container not found');
+        return;
+    }
     
     tasks.forEach(task => {
-        const taskElement = task.createTaskElement(); // Assuming this method creates the task element
-        taskContainer.appendChild(taskElement); // Append the task element to the container
+        // Only append tasks that belong to the active project
+        if (task.projectId === activeTaskContainerId) {
+            const taskElement = task.createTaskElement(); // Assuming this method creates the task element
+            taskContainer.appendChild(taskElement); // Append the task element to the container
 
-        // Apply strikethrough style if the task is complete
-        if (task.taskStatus === 'Complete') {
-            toggleStrikethrough(taskElement, false);
-        } else {
-            toggleStrikethrough(taskElement, true);
+            // Apply strikethrough style if the task is complete
+            if (task.taskStatus === 'Complete') {
+                toggleStrikethrough(taskElement, false);
+            } else {
+                toggleStrikethrough(taskElement, true);
+            }
         }
     });
 }
-

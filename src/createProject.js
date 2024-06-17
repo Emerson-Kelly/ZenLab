@@ -1,6 +1,9 @@
 import { createTaskContainer } from './createProjectContainer.js';
 
-let projectCounter = 0;
+export let projectCounter = 0;
+
+
+
 
 document.getElementById("create-project").addEventListener("click", createSideBarDropDown);
 
@@ -10,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 export default function createSideBarDropDown() {
+
+
     projectCounter++;
     console.log(projectCounter);
 
