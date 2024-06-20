@@ -33,7 +33,6 @@ body {
 }
 
 
-
 .navbar-light .navbar-brand {
     color: #198754;
     font-weight: 600;
@@ -121,7 +120,7 @@ body {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 360px;
     position: absolute;
     z-index: 1;
     display: none;
@@ -155,7 +154,7 @@ body {
 .days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    padding: 10px;
+    /*padding: 10px;*/
 }
   
 .day {
@@ -174,6 +173,14 @@ body {
 .day.selected {
     background-color: teal;
     color: white;
+}
+
+.calendar .day-name {
+    padding: 4px;
+    box-sizing: border-box;
+    text-align: center;
+    font-weight: bold;
+    background-color: #e9ecef;
 }
   
 #dateInput {

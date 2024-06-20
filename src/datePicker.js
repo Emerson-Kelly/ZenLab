@@ -1,80 +1,91 @@
 const daysContainer = document.getElementById("daysContainer");
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
-const monthYear = document.getElementById("monthYear");
-const dateInput = document.getElementById("dateInput");
-const calendar = document.getElementById("calendar");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const monthYear = document.getElementById("monthYear");
+        const dateInput = document.getElementById("dateInput");
+        const calendar = document.getElementById("calendar");
 
-let currentDate = new Date();
-let selectedDate = null;
+        let currentDate = new Date();
+        let selectedDate = null;
 
-function handleDayClick(day) {
-    selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-    dateInput.value = selectedDate.toLocaleDateString("en-US");
-    calendar.style.display = "none";
-    renderCalendar();
-}
+        function handleDayClick(day) {
+            selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+            dateInput.value = selectedDate.toLocaleDateString("en-US");
+            calendar.style.display = "none";
+            renderCalendar();
+        }
 
-function createDayElement(day) {
-    const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-    const dayElement = document.createElement("div");
-    dayElement.classList.add("day");
+        function createDayElement(day) {
+            const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+            const dayElement = document.createElement("div");
+            dayElement.classList.add("day");
 
-    if (date.toDateString() === new Date().toDateString()) {
-        dayElement.classList.add("current");
-    }
-    if (selectedDate && date.toDateString() === selectedDate.toDateString()) {
-        dayElement.classList.add("selected");
-    }
+            if (date.toDateString() === new Date().toDateString()) {
+                dayElement.classList.add("current");
+            }
+            if (selectedDate && date.toDateString() === selectedDate.toDateString()) {
+                dayElement.classList.add("selected");
+            }
 
-    dayElement.textContent = day;
-    dayElement.addEventListener("click", () => handleDayClick(day));
-    daysContainer.appendChild(dayElement);
-}
+            dayElement.textContent = day;
+            dayElement.addEventListener("click", () => handleDayClick(day));
+            daysContainer.appendChild(dayElement);
+        }
 
-export function renderCalendar() {
-    daysContainer.innerHTML = "";
-    const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-    const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+        function createDayNameElement(dayName) {
+            const dayNameElement = document.createElement("div");
+            dayNameElement.classList.add("day-name");
+            dayNameElement.textContent = dayName;
+            daysContainer.appendChild(dayNameElement);
+        }
 
-    monthYear.textContent = `${currentDate.toLocaleString("default", {
-        month: "long"
-    })} ${currentDate.getFullYear()}`;
+        export function renderCalendar() {
+            daysContainer.innerHTML = "";
 
-    for (let day = 1; day <= lastDay.getDate(); day++) {
-        createDayElement(day);
-    }
-}
+            const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+            dayNames.forEach(dayName => createDayNameElement(dayName));
 
-prevBtn.addEventListener("click", (event) => {
-    currentDate.setMonth(currentDate.getMonth() - 1);
-    event.preventDefault();
-    renderCalendar();
-});
+            const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+            const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
 
-nextBtn.addEventListener("click", (event) => {
-    currentDate.setMonth(currentDate.getMonth() + 1);
-    event.preventDefault();
-    renderCalendar();
-});
+            monthYear.textContent = `${currentDate.toLocaleString("default", {
+                month: "long"
+            })} ${currentDate.getFullYear()}`;
 
-dateInput.addEventListener("click", () => {
-    calendar.style.display = "block";
-    positionCalendar();
-});
+            for (let day = 1; day <= lastDay.getDate(); day++) {
+                createDayElement(day);
+            }
+        }
 
-document.addEventListener("click", (event) => {
-    if (!dateInput.contains(event.target) && !calendar.contains(event.target)) {
-        calendar.style.display = "none";
-    }
-});
+        prevBtn.addEventListener("click", (event) => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            event.preventDefault();
+            renderCalendar();
+        });
 
-function positionCalendar() {
-    const inputRect = dateInput.getBoundingClientRect();
-    calendar.style.top = inputRect.bottom + "px";
-    //calendar.style.left = inputRect.left + "px";
-}
+        nextBtn.addEventListener("click", (event) => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            event.preventDefault();
+            renderCalendar();
+        });
 
-window.addEventListener("resize", positionCalendar);
+        dateInput.addEventListener("click", () => {
+            calendar.style.display = "block";
+            positionCalendar();
+        });
 
-renderCalendar();
+        document.addEventListener("click", (event) => {
+            if (!dateInput.contains(event.target) && !calendar.contains(event.target)) {
+                calendar.style.display = "none";
+            }
+        });
+
+        function positionCalendar() {
+            const inputRect = dateInput.getBoundingClientRect();
+            calendar.style.top = inputRect.bottom + "px";
+            //calendar.style.left = inputRect.left + "px";
+        }
+
+        window.addEventListener("resize", positionCalendar);
+
+        renderCalendar();
