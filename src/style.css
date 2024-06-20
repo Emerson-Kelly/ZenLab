@@ -9,32 +9,47 @@
 
 :root {
    /* --body-color: #e4e9f7;*/
-    --body-color: white;
-    --sidebar-color: #fff;
-    --primary-color: #f4f2f2;
-    --primary-color-light: #f4f2f2;
-    --toggle-color: #ddd;
-    --text-color: #707070;
-    --dark-color: #000;
-  
-    --trans-02: all 0.2s ease;
-    --trans-03: all 0.3s ease;
-    --trans-04: all 0.4s ease;
-    --trans-04: all 0.5s ease;
+   --body-color: #F7F8FB;
+   --sidebar-color: #fafafa; /* Light gray for sidebar */
+   --navbar-color: #fafafa;
+   --primary-color: #f4f2f2;
+   --toggle-color: #ddd;
+   --text-color: #333;
+   --dark-color: #000;
+
+   --trans-02: all 0.2s ease;
   }
 
 body {
     height: 100vh;
     background-color: var(--body-color);
+    overflow-x: hidden;
     transition: var(--trans-02);
-   overflow-x: hidden;
 }
+
+.container-fluid {
+    gap: 2.3rem !important;
+    justify-content: flex-start !important;
+}
+
+
+
+.navbar-light .navbar-brand {
+    color: #198754;
+    font-weight: 600;
+    background-color: #fafafa !important;
+}
+
 
 .task-input {
     display: flex;
     flex-direction: column;
-    max-width: 400px;
+    max-width: 420px;
     margin: auto;
+    background-color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
 }
 
 .task-name,
@@ -44,23 +59,23 @@ body {
     gap: 4px;
 }
 
-.priority-submit {
+.priority-submit-due-date {
     display: flex;
     flex-direction: row;
     width: 100%;
     float: right;
     justify-content: space-between;
-    margin-top: .6rem;
+    align-items: flex-end;
 }
 
 .form-select {
-    width: 63%;
+   /* width: 63%;*/
 }
 
-.priority-dropdown {
+.priority-dropdown, .due-date-dropdown {
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .filter-dropdown {
@@ -163,7 +178,6 @@ body {
   
 #dateInput {
     width: 100%;
-    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
@@ -182,6 +196,7 @@ body {
     align-content: flex-start;
     margin-bottom: 1rem;
     align-items: baseline;
+    
 }
 
 .task-header-right {
@@ -202,10 +217,24 @@ body {
 .due-date-header {
     color: grey;
     font-weight: 300;
+    float: left;
+    position: absolute;
 }
 
 .due-date-header .btn, .btn-secondary {
     width: 96.12px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #212529;
+    border-color: #212529;
+}
+
+.btn-primary:hover {
+    color: #212529;
+    background-color: white;
+    border-color: #212529;
 }
 
 .task-footer .btn-check:focus+.btn, .btn:focus {
@@ -218,8 +247,18 @@ body {
 
 .task-footer .btn-outline-success {
     color: teal;
-    border-color: teal;
+    border: 1px solid teal;
+    background-color: transparent;
 }
+.btn {
+    padding: 8px 16px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color var(--trans-03), color var(--trans-03);
+}
+
 
 .task-footer .btn-outline-success:hover {
     background-color: teal;
@@ -227,35 +266,48 @@ body {
 }
 
 .trash-icon {
-    width: 24px;
-    height: 24px;
-    position: absolute;
-    top: 1.5rem;
+    width: 20px;
+    height: 20px;
+    fill: #6c757d;
+    cursor: pointer;
+    transition: transform 0.2s ease;
 }
 
 .trash-icon:hover {
    transition-duration: 150ms;
-    width: 26px;
-    height: 26px;
+   transform: scale(1.1);
+}
+.card {
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 20px;
+    transition: box-shadow var(--trans-03);
+}
+
+.card:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .card-title {
-    padding-left: 1.5rem;
+    padding-left: 1rem;
+    font-size: 1.2rem;
 }
 
 .card-title:focus-visible {
-    margin-left: 1.5rem;
+    margin-left: 1rem;
     padding: 0 .8rem 0 0;
 }
 
 .card-title:hover {
     background-color: lightgray;
-    margin-left: 1.5rem;
+    margin-left: 1rem;
     padding: 0 .8rem 0 0;
 }
 
 .card-body {
-   padding: 1rem 1rem 0 1rem;
+    padding: 20px;
 }
 
 .card-body p {
@@ -272,6 +324,8 @@ body {
     position: absolute;
     right: 0;
     bottom: 0;
+    color: var(--text-color);
+    cursor: pointer;
 }
 
 .edit-task{
@@ -298,16 +352,16 @@ body {
 
 #sidebar-wrapper {
     z-index: 1000;
-    position: fixed;
+    position: absolute;
     left: 250px;
     width: 0;
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
-    background-color: var(--sidebar-color);
     padding: 10px 14px;
+    background-color: var(--sidebar-color);
     transition: var(--trans-02);
-    box-shadow: 1px 0 5px -2px rgb(178 178 178 / 50%);
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -362,8 +416,18 @@ body {
     border-bottom: 1px dashed #999999; /* Optional: Add a visual indicator for editing */
 }
 
+.priority-text {
+    color: white;
+    padding: .3rem 1rem;
+    border-radius: 4rem;
+    font-size: 70%;
+    opacity: 90%;
+    max-width: 80px;
+    width: 100%;
+    text-align: center;
+}
+
 .delete-button {
-    color: red; /* Optional: Style the delete button */
     cursor: pointer;
     background: none;
     border: none;
@@ -450,4 +514,21 @@ body {
         margin-right: 0;
     }
 
+}
+
+@media (min-width: 768px) {
+    .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    .card-body {
+        flex-grow: 1;
+    }
+
+    .task-actions {
+        gap: 15px;
+    }
 }

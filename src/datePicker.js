@@ -72,7 +72,7 @@ document.addEventListener("click", (event) => {
 function positionCalendar() {
     const inputRect = dateInput.getBoundingClientRect();
     calendar.style.top = inputRect.bottom + "px";
-    calendar.style.left = inputRect.left + "px";
+    //calendar.style.left = inputRect.left + "px";
 }
 
 window.addEventListener("resize", positionCalendar);

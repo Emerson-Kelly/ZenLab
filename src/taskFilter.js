@@ -2,10 +2,9 @@ import { taskArray } from './displayTask.js';
 import { toggleStrikethrough } from './completeTask.js';
 import { projectCounter } from './createProject.js';
 
-
-
 // Add event listener to the dropdown menu
 const filterDropdown = document.getElementById('filter');
+
 
 filterDropdown.addEventListener('change', () => {
     const selectedOption = filterDropdown.value;
@@ -17,10 +16,10 @@ filterDropdown.addEventListener('change', () => {
             sortTasksByPriority(false); // Sort tasks from lowest to highest priority
             break;
         case 'newOld':
-            sortTasksByDate(true); // Sort tasks from newest to oldest
+            sortTasksByDate(false); // Sort tasks from newest to oldest
             break;
         case 'oldNew':
-            sortTasksByDate(false); // Sort tasks from oldest to newest
+            sortTasksByDate(true); // Sort tasks from oldest to newest
             break;
         case 'complete':
             filterTasksByCompletion(true); // Filter tasks by completion
@@ -56,9 +55,9 @@ function sortTasksByDate(newToOld) {
         const date1 = new Date(task1.dueDate);
         const date2 = new Date(task2.dueDate);
         if (newToOld) {
-            return date1 - date2; // Sort from newest to oldest
+            return date2 - date1; // Sort from newest to oldest
         } else {
-            return date2 - date1; // Sort from oldest to newest
+            return date1 - date2; // Sort from oldest to newest
         }
     });
     reorderTaskElements(taskArray);
@@ -68,22 +67,19 @@ function sortTasksByDate(newToOld) {
 function filterTasksByCompletion(complete) {
     console.log('Filtering tasks by completion:', complete ? 'Complete' : 'Incomplete'); // Debug statement
     const filteredTasks = taskArray.filter(task => task.taskStatus === (complete ? 'Complete' : 'Incomplete'));
-  
-
     reorderTaskElements(filteredTasks);
 }
-
 
 // Function to reorder task elements in the DOM
 export function reorderTaskElements(tasks) {
     // Get the ID of the currently active task container
     const activeTaskContainerId = document.querySelector('.nav-link.active').getAttribute('href').substring(1);
     const taskContainer = document.getElementById(activeTaskContainerId);
-    taskContainer.innerHTML = ''; // Clear existing tasks
     if (!taskContainer) {
         console.error('Active task container not found');
         return;
     }
+    taskContainer.innerHTML = ''; // Clear existing tasks
     
     tasks.forEach(task => {
         // Only append tasks that belong to the active project
@@ -99,4 +95,9 @@ export function reorderTaskElements(tasks) {
             }
         }
     });
+}
+
+
+if (!reorderTaskElements){
+filterDropdown.value = 'Select';
 }

@@ -9,11 +9,12 @@
 <body>
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand">Navbar</a>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            <a style="padding: 0;" href="#menu-toggle" class="btn btn-default" id="menu-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36px" height="36px" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+                </svg>
+            </a>
+            <a class="navbar-brand">ZenLab</a>
         </div>
     </nav>
 
@@ -22,11 +23,7 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a style="padding: 0;" href="#menu-toggle" class="btn btn-default" id="menu-toggle">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="36px" height="36px" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-                        </svg>
-                    </a>
+                  
                     <button id="create-project" class="btn btn-primary">New Project +</button>
                 </li>
                 <div class="projects" id="projects">
@@ -66,10 +63,17 @@
                                     <textarea class="input-textarea form-control" autocomplete="off" id="taskdetails" name="taskdetails"></textarea>
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <div class="due-date">
-                                    <label style="width: 140px;" for="priority-date">Due Date:</label>
-                                    <input type="text" class="form-control" id="dateInput" autocomplete="off" placeholder="Select a date">
+                            <div style="
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                        " class="mb-3">
+                               
+                                    <div class="priority-submit-due-date">
+                                        <div class="due-date-dropdown">
+                                    <label for="priority-date">Due Date:</label>
+                                    <input style="width: 120px; height: 38px;" type="text" class="form-control" id="dateInput" autocomplete="off" placeholder="Select a date">
+                                </div>
                                     <div class="calendar" id="calendar">
                                         <div class="header">
                                             <button id="prevBtn">&lt;</button>
@@ -78,10 +82,8 @@
                                         </div>
                                         <div class="days" id="daysContainer"></div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="priority-submit">
+                               
+                               
                                     <div class="priority-dropdown">
                                         <label style="width: 64px" for="priority">Priority:</label>
                                         <select class="form-select" name="priority" id="priority" required>
