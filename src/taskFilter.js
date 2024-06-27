@@ -1,9 +1,11 @@
 import { taskArray } from './displayTask.js';
 import { toggleStrikethrough } from './completeTask.js';
 import { projectCounter } from './createProject.js';
+import { addEditTaskEventListeners } from './editTask.js';
 
 // Add event listener to the dropdown menu
 const filterDropdown = document.getElementById('filter');
+
 
 
 filterDropdown.addEventListener('change', () => {
@@ -70,8 +72,11 @@ function filterTasksByCompletion(complete) {
     reorderTaskElements(filteredTasks);
 }
 
+
+let filterCounter = 0
 // Function to reorder task elements in the DOM
 export function reorderTaskElements(tasks) {
+  
     // Get the ID of the currently active task container
     const activeTaskContainerId = document.querySelector('.nav-link.active').getAttribute('href').substring(1);
     const taskContainer = document.getElementById(activeTaskContainerId);
@@ -85,8 +90,9 @@ export function reorderTaskElements(tasks) {
         // Only append tasks that belong to the active project
         if (task.projectId === activeTaskContainerId) {
             const taskElement = task.createTaskElement(); // Assuming this method creates the task element
+            
             taskContainer.appendChild(taskElement); // Append the task element to the container
-
+            
             // Apply strikethrough style if the task is complete
             if (task.taskStatus === 'Complete') {
                 toggleStrikethrough(taskElement, false);
@@ -94,10 +100,22 @@ export function reorderTaskElements(tasks) {
                 toggleStrikethrough(taskElement, true);
             }
         }
+
     });
+   
+   
 }
 
 
-if (!reorderTaskElements){
-filterDropdown.value = 'Select';
-}
+    if (filterCounter < 1){
+        filterDropdown.value = 'select';
+    //document.getElementById("priority").selectedIndex = 0;
+    
+        alert('working');
+        }
+        else {
+            filterDropdown.value = task.projectId;
+            
+            
+        }
+        filterCounter++;

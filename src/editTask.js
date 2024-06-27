@@ -7,13 +7,17 @@ export function addEditTaskEventListeners(taskElement) {
     cardTitleElement.addEventListener('input', () => {
         console.log('hello from card title');
         updateTaskArray(taskElement, 'title', cardTitleElement.innerText);
+        
     });
 
     cardTextElement.addEventListener('input', () => {
         console.log('hello from card text');
         updateTaskArray(taskElement, 'description', cardTextElement.innerText);
     });
+
 }
+
+
 
 // Function to update the task array
 function updateTaskArray(taskElement, key, value) {
@@ -23,3 +27,4 @@ function updateTaskArray(taskElement, key, value) {
         console.log(`Updated task ${index}:`, taskArray[index]);
     }
 }
+

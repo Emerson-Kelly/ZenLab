@@ -76,6 +76,8 @@ class DisplayTask {
 
         handleExpandButton(taskElement);
 
+        addEditTaskEventListeners(taskElement);
+
         return taskElement;
     }
 }
