@@ -4,9 +4,7 @@ import { projectCounter } from './createProject.js';
 import { addEditTaskEventListeners } from './editTask.js';
 
 // Add event listener to the dropdown menu
-const filterDropdown = document.getElementById('filter');
-
-
+export const filterDropdown = document.getElementById('filter');
 
 filterDropdown.addEventListener('change', () => {
     const selectedOption = filterDropdown.value;
@@ -34,8 +32,9 @@ filterDropdown.addEventListener('change', () => {
     }
 });
 
+
 // Function to sort tasks by priority
-function sortTasksByPriority(highToLow) {
+ export function sortTasksByPriority(highToLow) {
     taskArray.sort((task1, task2) => {
         // Convert priority to numerical value for comparison
         const priorityValues = { high: 3, medium: 2, low: 1 };
@@ -52,7 +51,7 @@ function sortTasksByPriority(highToLow) {
 }
 
 // Function to sort tasks by date
-function sortTasksByDate(newToOld) {
+export function sortTasksByDate(newToOld) {
     taskArray.sort((task1, task2) => {
         const date1 = new Date(task1.dueDate);
         const date2 = new Date(task2.dueDate);
@@ -66,15 +65,14 @@ function sortTasksByDate(newToOld) {
 }
 
 // Function to filter tasks by completion
-function filterTasksByCompletion(complete) {
+export function filterTasksByCompletion(complete) {
     console.log('Filtering tasks by completion:', complete ? 'Complete' : 'Incomplete'); // Debug statement
     const filteredTasks = taskArray.filter(task => task.taskStatus === (complete ? 'Complete' : 'Incomplete'));
     reorderTaskElements(filteredTasks);
 }
 
-
-let filterCounter = 0
 // Function to reorder task elements in the DOM
+
 export function reorderTaskElements(tasks) {
   
     // Get the ID of the currently active task container
@@ -96,7 +94,7 @@ export function reorderTaskElements(tasks) {
             // Apply strikethrough style if the task is complete
             if (task.taskStatus === 'Complete') {
                 toggleStrikethrough(taskElement, false);
-            } else {
+            } else { 
                 toggleStrikethrough(taskElement, true);
             }
         }
@@ -107,15 +105,3 @@ export function reorderTaskElements(tasks) {
 }
 
 
-    if (filterCounter < 1){
-        filterDropdown.value = 'select';
-    //document.getElementById("priority").selectedIndex = 0;
-    
-        alert('working');
-        }
-        else {
-            filterDropdown.value = task.projectId;
-            
-            
-        }
-        filterCounter++;

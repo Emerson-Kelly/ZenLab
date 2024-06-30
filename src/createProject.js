@@ -1,10 +1,10 @@
 import { createTaskContainer } from './createProjectContainer.js';
 import { removeProject } from './removeProject.js';
+import { taskArray } from './displayTask.js';
+import { reorderTaskElements, sortTasksByPriority, sortTasksByDate, filterTasksByCompletion, filterDropdown } from './taskFilter.js';
 
 export let projectCounter = 0;
-
-
-
+const projectFilters = {}; // Object to store last selected filter for each project
 
 document.getElementById("create-project").addEventListener("click", createSideBarDropDown);
 
@@ -12,9 +12,6 @@ document.getElementById("create-project").addEventListener("click", createSideBa
 document.addEventListener('DOMContentLoaded', () => {
     createSideBarDropDown();
 });
-
-
-
 
 export default function createSideBarDropDown() {
     projectCounter++;
@@ -28,7 +25,7 @@ export default function createSideBarDropDown() {
 
     const taskContainerId = `taskContainer-${projectCounter}`;
     const projectName = `New Project ${projectCounter}`;
-    
+
     projectElement.href = `#${taskContainerId}`;
     projectElement.textContent = projectName;
 
@@ -58,12 +55,17 @@ export default function createSideBarDropDown() {
         if (taskContainer) {
             taskContainer.style.display = 'block';
         }
+
+        // Update filter dropdown to reflect last selected filter for this project
+        const lastSelectedFilter = projectFilters[taskContainerId] || 'select'; // Default to 'select' if no filter is set
+        filterDropdown.value = lastSelectedFilter;
     };
 
     let lastClickTime = 0;
 
     projectElement.addEventListener('click', (event) => {
         const currentTime = new Date().getTime();
+
         if (currentTime - lastClickTime < 500) {
             event.preventDefault();
             projectElement.contentEditable = true;
@@ -80,14 +82,14 @@ export default function createSideBarDropDown() {
 
     deleteButton.addEventListener('click', (event) => {
         event.preventDefault();
-        
+
         listItem.remove();
-        
+
         const taskContainer = document.getElementById(taskContainerId);
         if (taskContainer) {
             taskContainer.remove();
         }
-        
+
         removeProject(taskContainerId);
         projectCounter--;
 
@@ -109,3 +111,36 @@ export default function createSideBarDropDown() {
     createTaskContainer(taskContainerId, projectName);
     activateProject();
 }
+
+// Function to handle filter change
+filterDropdown.addEventListener('change', () => {
+    const selectedOption = filterDropdown.value;
+    const activeProjectId = document.querySelector('.nav-link.active').getAttribute('href').substring(1);
+    
+    // Store the selected filter for the active project
+    projectFilters[activeProjectId] = selectedOption;
+
+    switch (selectedOption) {
+        case 'highLow':
+            sortTasksByPriority(true, activeProjectId); // Sort tasks from highest to lowest priority
+            break;
+        case 'lowHigh':
+            sortTasksByPriority(false, activeProjectId); // Sort tasks from lowest to highest priority
+            break;
+        case 'newOld':
+            sortTasksByDate(false, activeProjectId); // Sort tasks from newest to oldest
+            break;
+        case 'oldNew':
+            sortTasksByDate(true, activeProjectId); // Sort tasks from oldest to newest
+            break;
+        case 'complete':
+            filterTasksByCompletion(true, activeProjectId); // Filter tasks by completion
+            break;
+        case 'incomplete':
+            filterTasksByCompletion(false, activeProjectId); // Filter tasks by incompletion
+            break;
+        default:
+            // Default case or handle any other filters
+            reorderTaskElements(taskArray);
+    }
+});

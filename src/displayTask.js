@@ -30,7 +30,8 @@ class DisplayTask {
     createTaskElement() {
         const taskElement = document.createElement('div');
         taskElement.classList.add('card', 'mb-2');
-        taskElement.dataset.index = this.taskIndex;
+       taskElement.dataset.index = this.taskIndex;
+       // taskElement.dataset.projectId = this.projectId;
         taskElement.innerHTML = `
         <div class="card-body">
             <div class="task-header">
@@ -76,7 +77,7 @@ class DisplayTask {
 
         handleExpandButton(taskElement);
 
-        addEditTaskEventListeners(taskElement);
+         addEditTaskEventListeners(taskElement);
 
         return taskElement;
     }

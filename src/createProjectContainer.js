@@ -1,6 +1,7 @@
 import { appendTask } from './displayTask.js';
 
 
+
 export function createTaskContainer(taskContainerId, projectName) {
     const appendContainer = document.getElementById('appendContainer');
 
@@ -16,7 +17,7 @@ export function createTaskContainer(taskContainerId, projectName) {
     taskContainer.textContent = `Task Container for ${projectName}`; // Use projectName in text content
     taskContainer.classList.add('task-container');
     taskContainer.classList.add('mt-4');
-   
+ 
 
 
     appendContainer.appendChild(taskContainer);
