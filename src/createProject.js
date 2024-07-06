@@ -31,7 +31,7 @@ export default function createSideBarDropDown() {
 
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('delete-button');
-    deleteButton.innerHTML = `...`;
+    deleteButton.innerHTML = `x`;
 
     listItem.appendChild(projectElement);
     listItem.appendChild(deleteButton);

@@ -82,7 +82,8 @@ const daysContainer = document.getElementById("daysContainer");
 
         function positionCalendar() {
             const inputRect = dateInput.getBoundingClientRect();
-            calendar.style.top = inputRect.bottom + "px";
+            //calendar.style.top = inputRect.bottom + "px";
+            calendar.style.top = '100%'
             //calendar.style.left = inputRect.left + "px";
         }
 

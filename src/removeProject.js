@@ -1,6 +1,7 @@
 // Import taskArray if needed
 import { taskArray } from './displayTask.js';
 
+
 // Function to remove a project and its tasks from the task array
 export function removeProject(projectId) {
     const removedTasks = taskArray.filter(task => task.projectId === projectId);
