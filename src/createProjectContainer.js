@@ -14,7 +14,7 @@ export function createTaskContainer(taskContainerId, projectName) {
     const taskContainer = document.createElement('div');
 
     taskContainer.id = taskContainerId;  // Unique ID for each task container
-    taskContainer.textContent = `Task Container for ${projectName}`; // Use projectName in text content
+    //taskContainer.textContent = `Task Container for ${projectName}`; // Use projectName in text content
     taskContainer.classList.add('task-container');
     taskContainer.classList.add('mt-4');
  

@@ -4,6 +4,7 @@ document.getElementById('toggle-task-input').addEventListener('click', function(
     var btnSubmit = document.querySelector('.btn, .submit');
     var backgroundWrapper = document.getElementById('wrapper');
     var body = document.getElementsByTagName('body')[0];
+    var closeTaskInput = document.getElementById('closeTaskInput');
     if (taskInput.style.display === 'none' || taskInput.style.display === '') {
         taskInput.style.display = 'block';
         backgroundWrapper.style.opacity = '.5';
@@ -14,6 +15,11 @@ document.getElementById('toggle-task-input').addEventListener('click', function(
        
     }
     btnSubmit.addEventListener('click', function(event){
+        taskInput.style.display = 'none';
+        backgroundWrapper.style.opacity = '1';
+        body.style.removeProperty("background");
+    });
+    closeTaskInput.addEventListener('click', function(event){
         taskInput.style.display = 'none';
         backgroundWrapper.style.opacity = '1';
         body.style.removeProperty("background");

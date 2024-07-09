@@ -14,3 +14,12 @@ export function removeProject(projectId) {
 
     console.log(`Removed tasks for project with ID: ${projectId}`);
 }
+
+
+let deleteAllTasks = document.getElementById('deleteAllTasks');
+
+deleteAllTasks.addEventListener('click', function(projectId){
+   //event.preventDefault();
+    console.log('remove test');
+    removeProject();
+});
