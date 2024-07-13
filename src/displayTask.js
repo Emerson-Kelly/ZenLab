@@ -1,16 +1,72 @@
+import { saveProjectsToLocalStorage, saveTasksToLocalStorage, loadProjectsFromLocalStorage, loadTasksFromLocalStorage } from './localStorageFunctions.js';
 import { renderCalendar } from './datePicker.js';
 import { taskComplete } from './completeTask.js';
 import { toggleParagraphs, handleExpandButton } from './expandAndCollapse.js';
 import { addEditTaskEventListeners } from './editTask.js';
 import { projectCounter } from './createProject.js';
+import { projectArray } from './createProject.js';
+ 
 
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    //const projects = loadProjectsFromLocalStorage();
+   
+
+    const tasks = loadTasksFromLocalStorage();
+    if (tasks.length > 0) {
+        tasks.forEach(task => {
+            taskArray.push(task);
+            const taskElement = new DisplayTask(
+                task.taskIndex,
+                task.title,
+                task.description,
+                task.dueDate,
+                task.priority,
+                task.taskStatus,
+                task.projectId
+            ).createTaskElement();
+
+            const projectElement = document.getElementById(task.projectId);
+            if (projectElement) {
+                projectElement.appendChild(taskElement);
+            }
+        });
+    }
+
     renderCalendar();
     appendTask();
 });
 
+
+
 export let taskArray = [];
+
+/*
+export function createProject(projectName) {
+    const project = {
+        id: `project-${projectArray.length + 1}`,
+        name: projectName,
+        tasks: [] // Initialize tasks array for the project
+    };
+    projectArray.push(project);
+    saveProjectsToLocalStorage(projectArray);
+    return project;
+}
+*/
+/*
+export function createTask() {
+    let test = "test";
+    const project = {
+        id: `project-${projectArray.length + 1}`,
+        name: projectName,
+        tasks: [] // Initialize tasks array for the project
+    };
+    tasks.push(test)
+    saveTasksToLocalStorage(tasks);
+    return project;
+}
+*/
 
 export function handleTaskArray() {
     console.log(taskArray);
@@ -31,7 +87,7 @@ class DisplayTask {
         const taskElement = document.createElement('div');
         taskElement.classList.add('card', 'mb-2');
        taskElement.dataset.index = this.taskIndex;
-       // taskElement.dataset.projectId = this.projectId;
+       taskElement.dataset.projectId = this.projectId;
         taskElement.innerHTML = `
         <div class="card-body">
             <div class="task-header">
@@ -103,6 +159,7 @@ export function appendTask() {
         const dueDate = document.getElementById('dateInput').value || 'No due date specified';
         const taskStatus = 'Incomplete';
 
+
         const activeProjectElement = document.querySelector('.nav-link.active');
         if (!activeProjectElement) {
             console.error('No active project found');
@@ -114,6 +171,7 @@ export function appendTask() {
         const newTask = new DisplayTask(taskIndex, title, description, dueDate, priority, taskStatus, activeProjectId);
 
         taskArray.push(newTask);
+       
 
         if (newTask.projectId === activeProjectId) {
             const taskElement = newTask.createTaskElement();
@@ -121,5 +179,9 @@ export function appendTask() {
         }
 
         document.getElementById('taskForm').reset();
+
+        saveTasksToLocalStorage(taskArray);
     });
+
 }
+

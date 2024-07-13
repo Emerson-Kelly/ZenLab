@@ -1,6 +1,6 @@
 import { appendTask } from './displayTask.js';
-
-
+import { saveProjectsToLocalStorage } from './localStorageFunctions.js';
+import { projectArray } from './createProject.js';
 
 export function createTaskContainer(taskContainerId, projectName) {
     const appendContainer = document.getElementById('appendContainer');
@@ -10,17 +10,20 @@ export function createTaskContainer(taskContainerId, projectName) {
         return;
     }
 
-    // Create a new task container element
-    const taskContainer = document.createElement('div');
+    // Check if the task container already exists
+    let taskContainer = document.getElementById(taskContainerId);
+    if (!taskContainer) {
+        // Create a new task container element
+        taskContainer = document.createElement('div');
+        taskContainer.id = taskContainerId; // Unique ID for each task container
+        taskContainer.classList.add('task-container', 'mt-4');
+        appendContainer.appendChild(taskContainer);
 
-    taskContainer.id = taskContainerId;  // Unique ID for each task container
-    //taskContainer.textContent = `Task Container for ${projectName}`; // Use projectName in text content
-    taskContainer.classList.add('task-container');
-    taskContainer.classList.add('mt-4');
- 
+        console.log(`Task container created with ID: ${taskContainerId} for ${projectName}`);
+    } else {
+        console.log(`Task container with ID: ${taskContainerId} already exists.`);
+    }
 
+        saveProjectsToLocalStorage(projectArray);
 
-    appendContainer.appendChild(taskContainer);
-
-    console.log(`Task container created with ID: ${taskContainerId} for ${projectName}`);
 }

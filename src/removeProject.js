@@ -1,8 +1,10 @@
 // Import taskArray if needed
 import { taskArray } from './displayTask.js';
-
+import { saveProjectsToLocalStorage } from './localStorageFunctions.js';
+import { projectArray } from './createProject.js';
 
 // Function to remove a project and its tasks from the task array
+
 export function removeProject(projectId) {
     const removedTasks = taskArray.filter(task => task.projectId === projectId);
     removedTasks.forEach(task => {
@@ -10,16 +12,22 @@ export function removeProject(projectId) {
         if (index !== -1) {
             taskArray.splice(index, 1);
         }
+        
     });
-
+    
     console.log(`Removed tasks for project with ID: ${projectId}`);
+    saveProjectsToLocalStorage(taskArray);
+
 }
 
+/*
+export function removeProject(projectId) {
+    // Remove tasks associated with the project
+    const updatedTaskArray = taskArray.filter(task => task.projectId !== projectId);
+    taskArray.length = 0; // Clear the original array
+    taskArray.push(...updatedTaskArray); // Add the filtered tasks back
 
-let deleteAllTasks = document.getElementById('deleteAllTasks');
-
-deleteAllTasks.addEventListener('click', function(projectId){
-   //event.preventDefault();
-    console.log('remove test');
-    removeProject();
-});
+    console.log(`Removed tasks for project with ID: ${projectId}`);
+    saveProjectsToLocalStorage(projectArray);
+}
+*/
