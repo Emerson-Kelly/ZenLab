@@ -2,6 +2,7 @@ import { loadTasks, taskArray } from './displayTask.js';
 import { toggleStrikethrough } from './completeTask.js';
 import { projectCounter } from './createProject.js';
 import { addEditTaskEventListeners } from './editTask.js';
+import { saveTasksToLocalStorage } from './localStorageFunctions.js';
 
 
 
@@ -96,8 +97,10 @@ export function reorderTaskElements(tasks) {
             // Apply strikethrough style if the task is complete
             if (task.taskStatus === 'Complete') {
                 toggleStrikethrough(taskElement, false);
+                saveTasksToLocalStorage(taskArray);
             } else { 
                 toggleStrikethrough(taskElement, true);
+                saveTasksToLocalStorage(taskArray);
             }
         }
 

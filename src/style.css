@@ -459,7 +459,7 @@ label {
 }
 
 #wrapper.toggled {
-    padding-left: 250px;
+   /* padding-left: 250px;*/
 }
 
 #sidebar-wrapper {
@@ -478,18 +478,19 @@ label {
 
  
 #wrapper.toggled #sidebar-wrapper {
-    width: 250px;
+    width: 60px;
 }
 
 #page-content-wrapper {
     width: 100%;
     position: absolute;
-    padding: 56px;
+    padding-left: 56px;
 }
 
 #wrapper.toggled #page-content-wrapper {
     position: absolute;
     margin-right: -250px;
+    padding-top: 3rem;
 }
 
 /* Sidebar Styles */

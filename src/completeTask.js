@@ -1,4 +1,5 @@
 import { taskArray } from './displayTask.js';
+import { saveTasksToLocalStorage } from './localStorageFunctions.js';
 
 // Function to mark a task as complete or unmark it
 function toggleCompleteTask(taskElement, isComplete) {
@@ -12,13 +13,18 @@ function toggleCompleteTask(taskElement, isComplete) {
 
 // Function to add or remove strikethrough to title and description
 export function toggleStrikethrough(taskElement, isComplete) {
+   
     const cardTitle = taskElement.querySelector('.card-title');
     const cardText = taskElement.querySelector('.card-text');
     if (cardTitle && cardText) {
         cardTitle.style.textDecoration = isComplete ? 'none' : 'line-through';
         cardText.style.textDecoration = isComplete ? 'none' : 'line-through';
     }
+   
 }
+
+
+
 
 // Function to toggle the button text and class
 function toggleButton(button, isComplete) {
@@ -39,6 +45,11 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleCompleteTask(card, isComplete);
             toggleStrikethrough(card, isComplete);
             toggleButton(completeButton, isComplete);
+            saveTasksToLocalStorage(taskArray);
         }
     });
+
+
 });
+
+
