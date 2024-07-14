@@ -29,10 +29,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Activate the first project if there are any projects loaded
-    if (projectArray.length > 0) {
+     // Check for the last active project in localStorage
+     const lastActiveProject = localStorage.getItem('activeProject');
+
+    // Activate the last active project if found, otherwise activate the first project
+    if (lastActiveProject && document.getElementById(lastActiveProject)) {
+       
+       
+        const activeLink = document.querySelector(`.nav-link[href="#${lastActiveProject}"]`);
+       
+        if (activeLink) {
+            activeLink.click();
+            
+        }
+
+    } 
+    
+    else if (projectArray.length > 0) {
         document.querySelectorAll('.nav-link')[0].classList.add('active');
         document.getElementById(`taskContainer-1`).style.display = 'block';
+        
     }
 });
 
@@ -111,6 +127,11 @@ export function createSideBarDropDown(projectName, taskContainerId) {
         if (taskContainer) {
             taskContainer.style.display = 'block';
         }
+
+        // Save the active project to localStorage
+        localStorage.setItem('activeProject', taskContainerId);
+        console.log('Saving active project ID:', taskContainerId);
+        
 
         // Update filter dropdown to reflect last selected filter for this project
         const lastSelectedFilter = projectFilters[taskContainerId] || 'select'; // Default to 'select' if no filter is set

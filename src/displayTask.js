@@ -9,15 +9,11 @@ import { projectArray } from './createProject.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
-
-    //const projects = loadProjectsFromLocalStorage();
-   
-
     const tasks = loadTasksFromLocalStorage();
     if (tasks.length > 0) {
         tasks.forEach(task => {
-            taskArray.push(task);
-            const taskElement = new DisplayTask(
+            // Create DisplayTask instance from loaded task data
+            const displayTask = new DisplayTask(
                 task.taskIndex,
                 task.title,
                 task.description,
@@ -25,8 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 task.priority,
                 task.taskStatus,
                 task.projectId
-            ).createTaskElement();
+            );
+            taskArray.push(displayTask);
 
+            const taskElement = displayTask.createTaskElement();
             const projectElement = document.getElementById(task.projectId);
             if (projectElement) {
                 projectElement.appendChild(taskElement);
@@ -37,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCalendar();
     appendTask();
 });
+
 
 
 
@@ -83,7 +82,7 @@ class DisplayTask {
         this.projectId = projectId; // New property to associate task with a project
     }
 
-    createTaskElement() {
+   createTaskElement() {
         const taskElement = document.createElement('div');
         taskElement.classList.add('card', 'mb-2');
        taskElement.dataset.index = this.taskIndex;

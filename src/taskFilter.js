@@ -1,7 +1,9 @@
-import { taskArray } from './displayTask.js';
+import { loadTasks, taskArray } from './displayTask.js';
 import { toggleStrikethrough } from './completeTask.js';
 import { projectCounter } from './createProject.js';
 import { addEditTaskEventListeners } from './editTask.js';
+
+
 
 // Add event listener to the dropdown menu
 export const filterDropdown = document.getElementById('filter');
@@ -87,7 +89,7 @@ export function reorderTaskElements(tasks) {
     tasks.forEach(task => {
         // Only append tasks that belong to the active project
         if (task.projectId === activeTaskContainerId) {
-            const taskElement = task.createTaskElement(); // Assuming this method creates the task element
+           const taskElement = task.createTaskElement(); // Assuming this method creates the task element
             
             taskContainer.appendChild(taskElement); // Append the task element to the container
             

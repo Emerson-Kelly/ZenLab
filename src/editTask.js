@@ -1,4 +1,5 @@
 import { taskArray } from './displayTask.js';
+import { saveTasksToLocalStorage } from './localStorageFunctions.js';
 
 export function addEditTaskEventListeners(taskElement) {
     const cardTitleElement = taskElement.querySelector('.card-title');
@@ -25,6 +26,7 @@ function updateTaskArray(taskElement, key, value) {
     if (index >= 0 && index < taskArray.length) {
         taskArray[index][key] = value;
         console.log(`Updated task ${index}:`, taskArray[index]);
+        saveTasksToLocalStorage(taskArray);
     }
 }
 
