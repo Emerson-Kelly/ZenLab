@@ -5,6 +5,7 @@ import { toggleParagraphs, handleExpandButton } from './expandAndCollapse.js';
 import { addEditTaskEventListeners } from './editTask.js';
 import { projectCounter } from './createProject.js';
 import { projectArray } from './createProject.js';
+import { toggleStrikethrough } from './completeTask.js';
  
 
 
@@ -25,15 +26,28 @@ document.addEventListener('DOMContentLoaded', () => {
             taskArray.push(displayTask);
 
             const taskElement = displayTask.createTaskElement();
+            if (task.taskStatus === "Complete") {
+         
+                const cardTitle = taskElement.querySelector('.card-title');
+                const cardText = taskElement.querySelector('.card-text');
+                    cardTitle.style.textDecoration = 'line-through';
+                    cardText.style.textDecoration = 'line-through';
+                    saveTasksToLocalStorage(taskArray);
+            }
             const projectElement = document.getElementById(task.projectId);
             if (projectElement) {
                 projectElement.appendChild(taskElement);
+              
             }
+           
+            
+            
         });
     }
-
+   
     renderCalendar();
     appendTask();
+    
 });
 
 

@@ -102,7 +102,10 @@ export function reorderTaskElements(tasks) {
                 toggleStrikethrough(taskElement, true);
                 saveTasksToLocalStorage(taskArray);
             }
+            
         }
+
+        
 
     });
    

@@ -1,4 +1,5 @@
 import { taskArray } from './displayTask.js';
+import { saveTasksToLocalStorage } from './localStorageFunctions.js';
 
 // Function to delete a task
 function deleteTask(taskElement) {
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = trashIcon.closest('.card.mb-2');
             deleteTask(card);
             card.remove();
+            saveTasksToLocalStorage(taskArray);
         }
     });
 });
