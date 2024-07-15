@@ -505,7 +505,7 @@ label {
     line-height: 40px;
     display: flex;
     flex-direction: row-reverse;
-    justify-content: space-around;
+    justify-content: space-between;
     border-bottom: 1px solid #2125291a;
 }
 
@@ -515,12 +515,20 @@ label {
     display: block;
     text-decoration: none;
     color: #6c757d;
+    padding-right: 1.2rem;
+}
+
+.sidebar-nav li button {
+    padding-left: 1.2rem;
 }
 
 .sidebar-nav-item a {
     display: block;
     text-decoration: none;
     color: #999999;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 li.sidebar-nav-item:hover {
