@@ -9,7 +9,7 @@ export function createTaskContainer(taskContainerId, projectName) {
         console.error('appendContainer element not found');
         return;
     }
-
+    
     // Check if the task container already exists
     let taskContainer = document.getElementById(taskContainerId);
     if (!taskContainer) {

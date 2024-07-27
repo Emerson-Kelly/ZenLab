@@ -1,56 +1,57 @@
 import { createTaskContainer } from './createProjectContainer.js';
 import { removeProject } from './removeProject.js';
-import { saveProjectsToLocalStorage, loadProjectsFromLocalStorage, saveTasksToLocalStorage, loadTasksFromLocalStorage} from './localStorageFunctions.js'; 
+import { saveProjectsToLocalStorage, loadProjectsFromLocalStorage, saveTasksToLocalStorage, loadTasksFromLocalStorage } from './localStorageFunctions.js';
 import { reorderTaskElements, sortTasksByPriority, sortTasksByDate, filterTasksByCompletion, filterDropdown } from './taskFilter.js';
 import { forEach } from 'lodash';
 import { taskArray } from './displayTask.js';
 
 export let projectArray = []; // Initialize project array
+export let projectCounter = 0;
+
 document.addEventListener('DOMContentLoaded', () => {
-    projectArray = loadProjectsFromLocalStorage(); // Load projects
-   
+    projectArray = loadProjectsFromLocalStorage();
+    projectCounter = projectArray.length > 0 ? Math.max(...projectArray.map(p => parseInt(p.id))) : 0;
+
     console.log('Projects loaded on page load:', projectArray);
-    /*if (projects.length > 0) {
-        projects.forEach(project => {
-            projectArray.push(project);
-        });
-    }*/
-    // If no projects are found, create a default project
+
     if (projectArray.length === 0) {
         const defaultProjectName = 'New Project 1';
         const defaultProject = createProject(defaultProjectName);
-        const taskContainerId = `taskContainer-${projectArray.length}`;
+        const taskContainerId = `taskContainer-${projectCounter}`;
         createSideBarDropDown(defaultProject.name, taskContainerId);
     } else {
-        // Initialize sidebar with loaded projects
-        projectArray.forEach((project, index) => {
-            const taskContainerId = `taskContainer-${index + 1}`;
+        projectArray.forEach((project) => {
+            const taskContainerId = `taskContainer-${project.id}`;
             createSideBarDropDown(project.name, taskContainerId);
         });
     }
-
-     // Check for the last active project in localStorage
-     const lastActiveProject = localStorage.getItem('activeProject');
-
-    // Activate the last active project if found, otherwise activate the first project
-    if (lastActiveProject && document.getElementById(lastActiveProject)) {
-       
-       
-        const activeLink = document.querySelector(`.nav-link[href="#${lastActiveProject}"]`);
-       
-        if (activeLink) {
-            activeLink.click();
-            
-        }
-
-    } 
-    
-    else if (projectArray.length > 0) {
-        document.querySelectorAll('.nav-link')[0].classList.add('active');
-        document.getElementById(`taskContainer-1`).style.display = 'block';
-        
-    }
+    activateLastActiveProject();
 });
+
+
+const activateLastActiveProject = () => {
+    const lastActiveProjectId = localStorage.getItem('activeProject');
+
+    // Check if the last active project is still in the DOM
+    const lastActiveProjectElement = document.querySelector(`.nav-link[href="#${lastActiveProjectId}"]`);
+
+    if (lastActiveProjectElement && lastActiveProjectElement.closest('.sidebar-nav-item')) {
+        lastActiveProjectElement.click();
+    } else if (projectArray.length > 0) {
+        const firstProjectElement = document.querySelectorAll('.nav-link')[0];
+        if (firstProjectElement) {
+            firstProjectElement.classList.add('active');
+            const firstTaskContainerId = firstProjectElement.getAttribute('href').substring(1);
+            const firstTaskContainer = document.getElementById(firstTaskContainerId);
+            if (firstTaskContainer) {
+                firstTaskContainer.style.display = 'block';
+            }
+            // Save the active project to localStorage
+            localStorage.setItem('activeProject', firstTaskContainerId);
+            window.history.pushState(null, null, `#${firstTaskContainerId}`);
+        }
+    }
+};
 
 export function handleProjectArray() {
     console.log(projectArray); // Function to handle project array as needed
@@ -58,38 +59,25 @@ export function handleProjectArray() {
 
 export function createProject(projectName) {
     const project = {
-        id: `project-${projectArray.length + 1}`,
+        id: projectCounter + 1,
         name: projectName,
-        //tasks: [] // Initialize tasks array for the project
     };
+    projectCounter++;
     projectArray.push(project);
-
-
-    //Push saved tasks into their respective projects
-   //let test = 'test';
-  // project.tasks.push(test);
-  
-   //project.tasks.push(taskArray);
- // saveTasksToLocalStorage(taskArray);
- 
     saveProjectsToLocalStorage(projectArray);
     return project;
 }
 
-export let projectCounter = 0;
 const projectFilters = {}; // Object to store last selected filter for each project
 
 document.getElementById("create-project").addEventListener("click", () => {
-    let projectName = `New Project ${projectArray.length + 1}`;
+    let projectName = `New Project ${projectCounter + 1}`;
     const project = createProject(projectName);
-    const taskContainerId = `taskContainer-${projectArray.length}`;
+    const taskContainerId = `taskContainer-${projectCounter}`;
     createSideBarDropDown(project.name, taskContainerId);
 });
 
-
-
 export function createSideBarDropDown(projectName, taskContainerId) {
-    projectCounter++;
     console.log('Project Counter:', projectCounter);
 
     const listItem = document.createElement('li');
@@ -122,17 +110,16 @@ export function createSideBarDropDown(projectName, taskContainerId) {
         document.querySelectorAll('.task-container').forEach(container => {
             container.style.display = 'none';
         });
-
+     
         const taskContainer = document.getElementById(taskContainerId);
         if (taskContainer) {
             taskContainer.style.display = 'block';
         }
-
+   
         // Save the active project to localStorage
         localStorage.setItem('activeProject', taskContainerId);
         console.log('Saving active project ID:', taskContainerId);
         
-
         // Update filter dropdown to reflect last selected filter for this project
         const lastSelectedFilter = projectFilters[taskContainerId] || 'select'; // Default to 'select' if no filter is set
         filterDropdown.value = lastSelectedFilter;
@@ -154,64 +141,66 @@ export function createSideBarDropDown(projectName, taskContainerId) {
     });
 
     projectElement.addEventListener('blur', () => {
-    projectElement.contentEditable = false;
+        projectElement.contentEditable = false;
 
-    // Get the new title
-    const newTitle = projectElement.textContent.trim();
-    const projectId = taskContainerId.replace('taskContainer-', 'project-');
+        // Get the new title
+        const newTitle = projectElement.textContent.trim();
+        const projectId = taskContainerId.replace('taskContainer-', 'project-');
 
-    // Update the project title in projectArray
-    const project = projectArray.find(proj => proj.id === projectId);
-    if (project) {
-        project.name = newTitle;
-    }
+        // Update the project title in projectArray
+        const project = projectArray.find(proj => proj.id === projectId);
+        if (project) {
+            project.name = newTitle;
+        }
 
-    // Save the updated projectArray to local storage
-    saveProjectsToLocalStorage(projectArray);
-});
+        // Save the updated projectArray to local storage
+        saveProjectsToLocalStorage(projectArray);
+    });
 
     deleteButton.addEventListener('click', (event) => {
         event.preventDefault();
-
-        listItem.remove();
-
+        listItem.style.display = 'none';
         const taskContainer = document.getElementById(taskContainerId);
         if (taskContainer) {
-            taskContainer.remove();
+            taskContainer.style.display = 'none';
         }
-
-        // Remove project from projectArray
-        const projectId = taskContainerId.replace('taskContainer-', 'project-'); // Convert taskContainerId to projectId format
-        const removedProject = projectArray.find(project => project.id === projectId);
-
-    if (removedProject) {
-        const index = projectArray.indexOf(removedProject);
-        projectArray.splice(index, 1);
-        console.log('Project removed from projectArray');
-    }
-
-
-        removeProject(taskContainerId);
-        projectCounter--;
-       
+        const projectId = parseInt(taskContainerId.replace('taskContainer-', ''));
+        const removedProjectIndex = projectArray.findIndex(project => project.id === projectId);
+        if (removedProjectIndex !== -1) {
+            projectArray.splice(removedProjectIndex, 1);
+            console.log(`Project ${projectId} removed from projectArray`);
+        }
+    
+        saveProjectsToLocalStorage(projectArray); // Update localStorage after deletion
+    
+        // Handle UI and activate another project if needed
         const nextListItem = listItem.nextElementSibling || listItem.previousElementSibling;
         if (nextListItem) {
             const nextProjectElement = nextListItem.querySelector('.nav-link');
             if (nextProjectElement) {
                 nextProjectElement.classList.add('active');
-
+    
                 const nextTaskContainerId = nextProjectElement.getAttribute('href').substring(1);
                 const nextTaskContainer = document.getElementById(nextTaskContainerId);
                 if (nextTaskContainer) {
+                    document.querySelectorAll('.task-container').forEach(container => {
+                        container.style.display = 'none';
+                    });
                     nextTaskContainer.style.display = 'block';
+    
+                    localStorage.setItem('activeProject', nextTaskContainerId);
+                    console.log('Activated next project ID:', nextTaskContainerId);
                 }
             }
+        } else {
+            localStorage.removeItem('activeProject');
+            window.history.pushState(null, null, '#');
         }
-
-        saveProjectsToLocalStorage(projectArray); // Save updated projectArray
+    
+        projectCounter--; // Decrease projectCounter if necessary
     });
-
-    // Create task container and activate project
+    
+    
     createTaskContainer(taskContainerId, projectName);
     activateProject();
     saveProjectsToLocalStorage(projectArray); // Save updated projectArray
