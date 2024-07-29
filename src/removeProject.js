@@ -1,27 +1,55 @@
 import { taskArray } from './displayTask.js';
 import { saveProjectsToLocalStorage, saveTasksToLocalStorage, loadTasksFromLocalStorage } from './localStorageFunctions.js';
-import { projectArray, projectCounter } from './createProject.js';
+import { projectArray, projectCounter, deleteProjectAndTasks } from './createProject.js';
 
 
 // Function to remove a project and its tasks from the task array
 export function removeProject(projectId) {
-    const removedTasks = taskArray.filter(task => task.projectId === projectId);
+    // Remove tasks associated with the projectId
+    const removedTasks = taskArray.filter(task => task.projectId === `taskContainer-${projectId}`);
+    
     removedTasks.forEach(task => {
         const index = taskArray.indexOf(task);
         if (index !== -1) {
-            
-            taskArray.splice(index, 1);
+            taskArray.splice(index, 1); // Remove task from the global task array
         }
-   
     });
-   // projectCounter--
+
     console.log(`Removed tasks for project with ID: ${projectId}`);
     saveTasksToLocalStorage(taskArray);
-    
+
     // Remove the corresponding task container from local storage
-    localStorage.removeItem(`zenLabTasks-${projectId}`);
-    
+    removeTaskData(`taskContainer-${projectId}`);
+
+    // Optionally, you can remove the project itself from the global project list if needed
+    // Example: projectArray = projectArray.filter(project => project.id !== projectId);
+    // saveProjectsToLocalStorage(projectArray);
 }
+
+
+
+
+export function removeTaskData(taskContainerId) {
+    // Construct the key using the taskContainerId
+    const key = `zenLabTasks-${taskContainerId}`;
+
+    // Retrieve the task data from localStorage
+    const taskData = JSON.parse(localStorage.getItem(key)) || [];
+
+    // Log the task data to console
+    console.log('Task data before removal:', taskData);
+
+    // Set the task data to an empty array to effectively remove tasks
+    localStorage.setItem(key, JSON.stringify([]));
+
+    // Optionally, confirm removal
+    console.log('Task data has been cleared for:', key);
+}
+
+
+
+
+
 
 document.getElementById("deleteAllTasks").addEventListener("click", () => {
     // Get the ID of the currently active project
@@ -40,13 +68,10 @@ document.getElementById("deleteAllTasks").addEventListener("click", () => {
     }
 
     // Update the task container in the DOM
-   
-    const taskContainer = document.getElementById(taskContainerId);
+    const taskContainer = document.getElementById(activeProjectId);
     if (taskContainer) {
-       taskContainer.remove();
+        taskContainer.remove();
     }
-
-    projectCounter--
 
     // Save the updated taskArray to local storage
     saveTasksToLocalStorage(taskArray);

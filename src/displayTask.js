@@ -37,9 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const projectElement = document.getElementById(task.projectId);
             if (projectElement) {
                 projectElement.appendChild(taskElement);
-              
+               
             }
-           
+            saveTasksToLocalStorage(taskArray);
             
             
         });

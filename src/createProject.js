@@ -1,5 +1,5 @@
 import { createTaskContainer } from './createProjectContainer.js';
-import { removeProject } from './removeProject.js';
+import { removeProject, removeTaskData } from './removeProject.js';
 import { saveProjectsToLocalStorage, loadProjectsFromLocalStorage, saveTasksToLocalStorage, loadTasksFromLocalStorage } from './localStorageFunctions.js';
 import { reorderTaskElements, sortTasksByPriority, sortTasksByDate, filterTasksByCompletion, filterDropdown } from './taskFilter.js';
 import { forEach } from 'lodash';
@@ -142,68 +142,83 @@ export function createSideBarDropDown(projectName, taskContainerId) {
 
     projectElement.addEventListener('blur', () => {
         projectElement.contentEditable = false;
-
+    
         // Get the new title
         const newTitle = projectElement.textContent.trim();
-        const projectId = taskContainerId.replace('taskContainer-', 'project-');
-
+        const projectId = parseInt(taskContainerId.replace('taskContainer-', ''));
+    
         // Update the project title in projectArray
         const project = projectArray.find(proj => proj.id === projectId);
         if (project) {
             project.name = newTitle;
+            console.log(`Project ID ${projectId} renamed to: ${newTitle}`);
+    
+            // Save the updated projectArray to local storage
+            saveProjectsToLocalStorage(projectArray);
+            saveTasksToLocalStorage(taskArray);
         }
-
-        // Save the updated projectArray to local storage
-        saveProjectsToLocalStorage(projectArray);
     });
+    
 
+   
     deleteButton.addEventListener('click', (event) => {
-        event.preventDefault();
-        listItem.style.display = 'none';
-        const taskContainer = document.getElementById(taskContainerId);
-        if (taskContainer) {
-            taskContainer.style.display = 'none';
-        }
-        const projectId = parseInt(taskContainerId.replace('taskContainer-', ''));
-        const removedProjectIndex = projectArray.findIndex(project => project.id === projectId);
-        if (removedProjectIndex !== -1) {
-            projectArray.splice(removedProjectIndex, 1);
-            console.log(`Project ${projectId} removed from projectArray`);
-        }
-    
-        saveProjectsToLocalStorage(projectArray); // Update localStorage after deletion
-    
-        // Handle UI and activate another project if needed
-        const nextListItem = listItem.nextElementSibling || listItem.previousElementSibling;
-        if (nextListItem) {
-            const nextProjectElement = nextListItem.querySelector('.nav-link');
-            if (nextProjectElement) {
-                nextProjectElement.classList.add('active');
-    
-                const nextTaskContainerId = nextProjectElement.getAttribute('href').substring(1);
-                const nextTaskContainer = document.getElementById(nextTaskContainerId);
-                if (nextTaskContainer) {
-                    document.querySelectorAll('.task-container').forEach(container => {
-                        container.style.display = 'none';
-                    });
-                    nextTaskContainer.style.display = 'block';
-    
-                    localStorage.setItem('activeProject', nextTaskContainerId);
-                    console.log('Activated next project ID:', nextTaskContainerId);
-                }
-            }
-        } else {
-            localStorage.removeItem('activeProject');
-            window.history.pushState(null, null, '#');
-        }
-    
-        projectCounter--; // Decrease projectCounter if necessary
+       deleteProjectAndTasks(listItem, taskContainerId);
+       const projectId = parseInt(taskContainerId.replace('taskContainer-', ''));
+       removeProject(projectId);
+        // Remove the values/array from the respective taskContainer 
+       removeTaskData(taskContainerId);
     });
-    
+   
     
     createTaskContainer(taskContainerId, projectName);
     activateProject();
     saveProjectsToLocalStorage(projectArray); // Save updated projectArray
+    
+}
+
+export function deleteProjectAndTasks(listItem, taskContainerId) {
+    event.preventDefault();
+    listItem.style.display = 'none';
+    const taskContainer = document.getElementById(taskContainerId);
+    if (taskContainer) {
+        taskContainer.style.display = 'none';
+        taskContainer.innerHTML = '';
+    }
+
+    const projectId = parseInt(taskContainerId.replace('taskContainer-', ''));
+    const removedProjectIndex = projectArray.findIndex(project => project.id === projectId);
+    if (removedProjectIndex !== -1) {
+        projectArray.splice(removedProjectIndex, 1);
+        console.log(`Project ${projectId} removed from projectArray`);
+    }
+    
+    saveProjectsToLocalStorage(projectArray); // Update localStorage after deletion
+    
+    // Handle UI and activate another project if needed
+    const nextListItem = listItem.nextElementSibling || listItem.previousElementSibling;
+    if (nextListItem) {
+        const nextProjectElement = nextListItem.querySelector('.nav-link');
+        if (nextProjectElement) {
+            nextProjectElement.classList.add('active');
+
+            const nextTaskContainerId = nextProjectElement.getAttribute('href').substring(1);
+            const nextTaskContainer = document.getElementById(nextTaskContainerId);
+            if (nextTaskContainer) {
+                document.querySelectorAll('.task-container').forEach(container => {
+                    container.style.display = 'none';
+                });
+                nextTaskContainer.style.display = 'block';
+
+                localStorage.setItem('activeProject', nextTaskContainerId);
+                console.log('Activated next project ID:', nextTaskContainerId);
+            }
+        }
+    } else {
+        localStorage.removeItem('activeProject');
+        window.history.pushState(null, null, '#');
+    }
+   
+    projectCounter--; // Decrease projectCounter if necessary
 }
 
 // Function to handle filter change
@@ -233,8 +248,8 @@ filterDropdown.addEventListener('change', () => {
         case 'incomplete':
             filterTasksByCompletion(false, activeProjectId); // Filter tasks by incompletion
             break;
-        default:
+        /*default:
             // Default case or handle any other filters
-            reorderTaskElements(projectArray.find(project => project.id === activeProjectId).tasks);
+            reorderTaskElements(projectArray.find(project => project.id === activeProjectId).tasks);*/
     }
 });
