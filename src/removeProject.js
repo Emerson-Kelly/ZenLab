@@ -50,7 +50,7 @@ export function removeTaskData(taskContainerId) {
 
 
 
-
+/*
 document.getElementById("deleteAllTasks").addEventListener("click", () => {
     // Get the ID of the currently active project
     const activeProjectElement = document.querySelector('.nav-link.active');
@@ -79,3 +79,4 @@ document.getElementById("deleteAllTasks").addEventListener("click", () => {
     // Remove the task container from local storage
     localStorage.removeItem(`zenLabTasks-${activeProjectId}`);
 });
+*/
