@@ -160,18 +160,13 @@ class DisplayTask {
 export function appendTask() {
     document.getElementById('taskForm').addEventListener('submit', function (event) {
         event.preventDefault();
-        const prioritySelect = document.getElementById('priority');
-        if (prioritySelect.value === "") {
-            alert("Please select a valid priority.");
-            return;
-        }
+        
 
         const title = document.getElementById('taskName').value;
         const description = document.getElementById('taskdetails').value;
         const priority = document.getElementById('priority').value;
-        const dueDate = document.getElementById('dateInput').value || 'No due date specified';
+        const dueDate = document.getElementById('dateInput').value || 'N/A';
         const taskStatus = 'Incomplete';
-
 
         const activeProjectElement = document.querySelector('.nav-link.active');
         if (!activeProjectElement) {
