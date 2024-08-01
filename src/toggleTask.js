@@ -18,27 +18,31 @@ document.getElementById('toggle-task-input').addEventListener('click', function(
 
     if (taskInput.style.opacity === '0' || taskInput.style.opacity === '') {
         taskInput.style.opacity = '1';
+        taskInput.style.zIndex = '1';
         backgroundWrapper.style.opacity = '.5';
         body.style.background = "#eeeeee";
-        
     }  
     else {
         taskInput.style.opacity = '0';
+        taskInput.style.zIndex = '-1';
     }
 
     btnSubmit.addEventListener('click', function(event){
         const prioritySelection = document.getElementById('priority');
         if (prioritySelection.value === "") {
             taskInput.style.opacity = '1';
+            taskInput.style.zIndex = '1';
         }
         else {
         taskInput.style.opacity = '0';
+        taskInput.style.zIndex = '-1';
         backgroundWrapper.style.opacity = '1';
         body.style.removeProperty("background");
         }
     });
     closeTaskInput.addEventListener('click', function(event){
         taskInput.style.opacity = '0';
+        taskInput.style.zIndex = '-1';
         backgroundWrapper.style.opacity = '1';
         body.style.removeProperty("background");
     });
