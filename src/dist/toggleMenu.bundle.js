@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkzenlab=self.webpackChunkzenlab||[]).push([[174],{617:(e,t,n)=>{function l(){var e=document.getElementById("menu-toggle"),t=document.getElementById("wrapper"),n=document.querySelector(".projects"),l=document.getElementById("create-project");e.addEventListener("click",(function(e){e.preventDefault(),t.classList.toggle("toggled");var c=t.classList.contains("toggled");n.style.display=c?"none":"block",l&&(l.style.display=c?"none":"block")}))}n.d(t,{A:()=>l})}},e=>{e(e.s=617)}]);
-//# sourceMappingURL=toggleMenu.bundle.js.map
