@@ -13,11 +13,16 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 
-document.addEventListener('DOMContentLoaded', function() {
- 
-  loadProjectsFromLocalStorage();
-  toggleMenu();
+window.onload = function(){
 
+  window.scrollTo(10,0);
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+  
+loadProjectsFromLocalStorage();
+  toggleMenu();
+  
 });
 
 
