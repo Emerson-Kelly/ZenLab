@@ -21,9 +21,13 @@ window.onload = function(){
 document.addEventListener('DOMContentLoaded', function() {
   
 loadProjectsFromLocalStorage();
-  toggleMenu();
+toggleMenu();
+
+  
   
 });
+
+
 
 
 function component() {
