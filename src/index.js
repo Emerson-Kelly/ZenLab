@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import './style.css';
-import { loadProjectsFromLocalStorage, saveProjectsToLocalStorage, loadTasksFromLocalStorage, saveTasksToLocalStorage } from './localStorageFunctions.js'; // Adjusted import
+import { loadProjectsFromLocalStorage, saveProjectsToLocalStorage, loadTasksFromLocalStorage, saveTasksToLocalStorage } from './localStorageFunctions.js';
 import DisplayTask, { appendTask } from './displayTask.js';
 import { toggleMenu } from './toggleMenu.js';
 import { taskArray } from './displayTask.js';

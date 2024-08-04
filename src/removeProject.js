@@ -21,9 +21,6 @@ export function removeProject(projectId) {
     // Remove the corresponding task container from local storage
     removeTaskData(`taskContainer-${projectId}`);
 
-    // Optionally, you can remove the project itself from the global project list if needed
-    // Example: projectArray = projectArray.filter(project => project.id !== projectId);
-    // saveProjectsToLocalStorage(projectArray);
 }
 
 

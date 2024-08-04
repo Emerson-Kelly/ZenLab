@@ -55,31 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 export let taskArray = [];
 
-/*
-export function createProject(projectName) {
-    const project = {
-        id: `project-${projectArray.length + 1}`,
-        name: projectName,
-        tasks: [] // Initialize tasks array for the project
-    };
-    projectArray.push(project);
-    saveProjectsToLocalStorage(projectArray);
-    return project;
-}
-*/
-/*
-export function createTask() {
-    let test = "test";
-    const project = {
-        id: `project-${projectArray.length + 1}`,
-        name: projectName,
-        tasks: [] // Initialize tasks array for the project
-    };
-    tasks.push(test)
-    saveTasksToLocalStorage(tasks);
-    return project;
-}
-*/
 
 export function handleTaskArray() {
     console.log(taskArray);
@@ -93,7 +68,7 @@ class DisplayTask {
         this.dueDate = dueDate;
         this.priority = priority;
         this.taskStatus = taskStatus;
-        this.projectId = projectId; // New property to associate task with a project
+        this.projectId = projectId;
     }
 
    createTaskElement() {

@@ -121,7 +121,7 @@ export function createSideBarDropDown(projectName, taskContainerId) {
         console.log('Saving active project ID:', taskContainerId);
         
         // Update filter dropdown to reflect last selected filter for this project
-        const lastSelectedFilter = projectFilters[taskContainerId] || 'select'; // Default to 'select' if no filter is set
+        const lastSelectedFilter = projectFilters[taskContainerId] || 'select';
         filterDropdown.value = lastSelectedFilter;
     };
 
@@ -218,7 +218,7 @@ export function deleteProjectAndTasks(listItem, taskContainerId) {
         window.history.pushState(null, null, '#');
     }
    
-    projectCounter--; // Decrease projectCounter if necessary
+    projectCounter--;
 }
 
 // Function to handle filter change

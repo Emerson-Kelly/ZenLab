@@ -566,8 +566,8 @@ li.sidebar-nav-item:visited {
 }
 
 .sidebar-nav-item a[contenteditable="true"] {
-    outline: none; /* Remove the default outline for editable elements */
-    border-bottom: 1px dashed #999999; /* Optional: Add a visual indicator for editing */
+    outline: none; 
+    border-bottom: 1px dashed #999999; 
 }
 
 .priority-text {
