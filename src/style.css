@@ -175,6 +175,7 @@ bi, .bi-plus-circle-fill:hover {
     padding: 0;
     margin: 0;
     font-size: 104%;
+    max-width: 560px;
 }
 
 .input-textarea {
@@ -423,6 +424,8 @@ bi, .bi-plus-circle-fill:hover {
     padding-left: .8rem;
     font-size: 1.2rem;
     border-radius: 2px;
+    max-width: 360px;
+    width: 100%;
 }
 
 .card-title:focus-visible {
@@ -700,6 +703,23 @@ li.sidebar-nav-item:visited {
         top: 6% !important;
         width: 320px;
     }
+
+    .card-title {
+        max-width: 100px;
+        font-size: 1rem;
+    }
+
+    .task-header-right {
+       gap: 0;
+    }
+
+   
+    .priority-text {
+        padding: .2rem .2rem;
+        max-width: 60px;
+    }
+
+   
 
   }
 
