@@ -1,7 +1,7 @@
 {
-  "name": "My App",
-  "short_name": "My App",
-  "description": "My App Description",
+  "name": "ZenLab",
+  "short_name": "ZenLab",
+  "description": "Task Management",
   "dir": "auto",
   "lang": "en-US",
   "display": "standalone",
